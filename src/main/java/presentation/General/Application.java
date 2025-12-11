@@ -80,6 +80,9 @@ public class Application {
             switch (option) {
                 case LOGIN:
                     currentCustomer = customerHandler.handleLogin();
+                    if (currentCustomer != null && inputHandler.readYesNo("Do you want to start Order (Y/N) : ")) {
+                        orderHandler.handleOrder(currentCustomer);
+                    }
                     break;
                 case REGISTER:
                     customerHandler.handleRegister();

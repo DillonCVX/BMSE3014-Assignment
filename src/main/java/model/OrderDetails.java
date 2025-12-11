@@ -53,7 +53,10 @@ public class OrderDetails {
     public double calculateEachTotalPrice() {
         return subtotal.doubleValue();
     }
-    
+    public void setSubtotal(BigDecimal subtotal) {
+    this.subtotal = subtotal;
+}
+
     // Getters
     public int getOrderDetailId() {
         return orderDetailId;

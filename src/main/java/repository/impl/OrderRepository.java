@@ -76,17 +76,26 @@ public class OrderRepository implements IOrderRepository {
         List<Order> orders = new ArrayList<>();
         try (Connection conn = connectionProvider.getConnection();
              PreparedStatement stmt = conn.prepareStatement(FIND_BY_CUSTOMER_ID)) {
-            
+
             stmt.setInt(1, customerId);
             ResultSet rs = stmt.executeQuery();
-            
+
             while (rs.next()) {
                 Order order = mapResultSetToOrder(rs);
-                order.setOrderDetails(findOrderDetails(order.getOrderId()));
                 orders.add(order);
             }
         } catch (SQLException e) {
             System.err.println("Error finding orders by customer ID: " + e.getMessage());
+            return orders;
+        }
+
+        // Fetch order details after closing the main ResultSet/Statement to avoid driver limitations
+        for (Order order : orders) {
+            try {
+                order.setOrderDetails(findOrderDetails(order.getOrderId()));
+            } catch (SQLException e) {
+                System.err.println("Error finding order details for order " + order.getOrderId() + ": " + e.getMessage());
+            }
         }
         return orders;
     }
@@ -97,14 +106,23 @@ public class OrderRepository implements IOrderRepository {
         try (Connection conn = connectionProvider.getConnection();
              PreparedStatement stmt = conn.prepareStatement(FIND_ALL);
              ResultSet rs = stmt.executeQuery()) {
-            
+
             while (rs.next()) {
                 Order order = mapResultSetToOrder(rs);
-                order.setOrderDetails(findOrderDetails(order.getOrderId()));
                 orders.add(order);
             }
         } catch (SQLException e) {
             System.err.println("Error finding all orders: " + e.getMessage());
+            return orders;
+        }
+
+        // Fetch order details after main query completes to avoid ResultSet conflicts
+        for (Order order : orders) {
+            try {
+                order.setOrderDetails(findOrderDetails(order.getOrderId()));
+            } catch (SQLException e) {
+                System.err.println("Error finding order details for order " + order.getOrderId() + ": " + e.getMessage());
+            }
         }
         return orders;
     }
@@ -245,3 +263,4 @@ public class OrderRepository implements IOrderRepository {
         return details;
     }
 }
+
