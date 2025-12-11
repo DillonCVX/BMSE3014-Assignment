@@ -1097,10 +1097,17 @@ public class FoodRepositoryTest {
     @Test
     @DisplayName("Test default constructor - uses DatabaseConnection.getInstance()")
     void testDefaultConstructor_UsesDatabaseConnection() {
-        FoodRepository repo = new FoodRepository();
-        assertNotNull(repo);
-        // Verify it can perform operations (uses default DatabaseConnection)
-        // This tests the default constructor path
+        // Suppress error output during this test (default constructor may try MySQL connection)
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            FoodRepository repo = new FoodRepository();
+            assertNotNull(repo);
+            // Verify it can perform operations (uses default DatabaseConnection)
+            // This tests the default constructor path
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
@@ -1250,48 +1257,62 @@ public class FoodRepositoryTest {
     @Test
     @DisplayName("Test save - SQLException throws RuntimeException")
     void testSave_SQLExceptionThrowsRuntimeException() throws SQLException {
-        // Create a mock ConnectionProvider that throws SQLException
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
-            .thenReturn(mockStmt);
-        when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Food food = new Food("Test Food", 10.00, "Set");
-        
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            repo.save(food);
-        });
-        
-        assertTrue(exception.getMessage().contains("Failed to save food"));
-        assertNotNull(exception.getCause());
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            // Create a mock ConnectionProvider that throws SQLException
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString(), eq(Statement.RETURN_GENERATED_KEYS)))
+                .thenReturn(mockStmt);
+            when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Food food = new Food("Test Food", 10.00, "Set");
+            
+            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+                repo.save(food);
+            });
+            
+            assertTrue(exception.getMessage().contains("Failed to save food"));
+            assertNotNull(exception.getCause());
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test update - SQLException throws RuntimeException")
     void testUpdate_SQLExceptionThrowsRuntimeException() throws SQLException {
-        // Create a mock ConnectionProvider that throws SQLException
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Food food = new Food(2000, "Test Food", 10.00, "Set");
-        
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            repo.update(food);
-        });
-        
-        assertTrue(exception.getMessage().contains("Failed to update food"));
-        assertNotNull(exception.getCause());
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            // Create a mock ConnectionProvider that throws SQLException
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Food food = new Food(2000, "Test Food", 10.00, "Set");
+            
+            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+                repo.update(food);
+            });
+            
+            assertTrue(exception.getMessage().contains("Failed to update food"));
+            assertNotNull(exception.getCause());
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
@@ -1321,153 +1342,216 @@ public class FoodRepositoryTest {
     @Test
     @DisplayName("Test findById - SQLException returns empty")
     void testFindById_SQLExceptionReturnsEmpty() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Optional<Food> result = repo.findById(2000);
-        
-        assertFalse(result.isPresent());
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Optional<Food> result = repo.findById(2000);
+            
+            assertFalse(result.isPresent());
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test findByName - SQLException returns empty")
     void testFindByName_SQLExceptionReturnsEmpty() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Optional<Food> result = repo.findByName("Test Food");
-        
-        assertFalse(result.isPresent());
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Optional<Food> result = repo.findByName("Test Food");
+            
+            assertFalse(result.isPresent());
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test findAll - SQLException returns empty list")
     void testFindAll_SQLExceptionReturnsEmptyList() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        List<Food> result = repo.findAll();
-        
-        assertNotNull(result);
-        assertTrue(result.isEmpty());
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            List<Food> result = repo.findAll();
+            
+            assertNotNull(result);
+            assertTrue(result.isEmpty());
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test existsById - SQLException returns false")
     void testExistsById_SQLExceptionReturnsFalse() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        boolean result = repo.existsById(2000);
-        
-        assertFalse(result);
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            boolean result = repo.existsById(2000);
+            
+            assertFalse(result);
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test existsByName - SQLException returns false")
     void testExistsByName_SQLExceptionReturnsFalse() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        boolean result = repo.existsByName("Test Food");
-        
-        assertFalse(result);
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            boolean result = repo.existsByName("Test Food");
+            
+            assertFalse(result);
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test getNextFoodId - SQLException returns 2000")
     void testGetNextFoodId_SQLExceptionReturns2000() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        int result = repo.getNextFoodId();
-        
-        assertEquals(2000, result);
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeQuery()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            int result = repo.getNextFoodId();
+            
+            assertEquals(2000, result);
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test deleteById - SQLException returns false")
     void testDeleteById_SQLExceptionReturnsFalse() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        Connection mockConnection = mock(Connection.class);
-        PreparedStatement mockStmt = mock(PreparedStatement.class);
-        
-        when(mockProvider.getConnection()).thenReturn(mockConnection);
-        when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
-        when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        boolean result = repo.deleteById(2000);
-        
-        assertFalse(result);
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            Connection mockConnection = mock(Connection.class);
+            PreparedStatement mockStmt = mock(PreparedStatement.class);
+            
+            when(mockProvider.getConnection()).thenReturn(mockConnection);
+            when(mockConnection.prepareStatement(anyString())).thenReturn(mockStmt);
+            when(mockStmt.executeUpdate()).thenThrow(new SQLException("Database error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            boolean result = repo.deleteById(2000);
+            
+            assertFalse(result);
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test save - connection throws SQLException on getConnection")
     void testSave_ConnectionThrowsSQLException() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        when(mockProvider.getConnection()).thenThrow(new SQLException("Connection error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Food food = new Food("Test Food", 10.00, "Set");
-        
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            repo.save(food);
-        });
-        
-        assertTrue(exception.getMessage().contains("Failed to save food"));
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            when(mockProvider.getConnection()).thenThrow(new SQLException("Connection error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Food food = new Food("Test Food", 10.00, "Set");
+            
+            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+                repo.save(food);
+            });
+            
+            assertTrue(exception.getMessage().contains("Failed to save food"));
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test update - connection throws SQLException on getConnection")
     void testUpdate_ConnectionThrowsSQLException() throws SQLException {
-        ConnectionProvider mockProvider = mock(ConnectionProvider.class);
-        when(mockProvider.getConnection()).thenThrow(new SQLException("Connection error"));
-        
-        FoodRepository repo = new FoodRepository(mockProvider);
-        Food food = new Food(2000, "Test Food", 10.00, "Set");
-        
-        RuntimeException exception = assertThrows(RuntimeException.class, () -> {
-            repo.update(food);
-        });
-        
-        assertTrue(exception.getMessage().contains("Failed to update food"));
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            ConnectionProvider mockProvider = mock(ConnectionProvider.class);
+            when(mockProvider.getConnection()).thenThrow(new SQLException("Connection error"));
+            
+            FoodRepository repo = new FoodRepository(mockProvider);
+            Food food = new Food(2000, "Test Food", 10.00, "Set");
+            
+            RuntimeException exception = assertThrows(RuntimeException.class, () -> {
+                repo.update(food);
+            });
+            
+            assertTrue(exception.getMessage().contains("Failed to update food"));
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test

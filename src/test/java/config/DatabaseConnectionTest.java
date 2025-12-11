@@ -64,9 +64,23 @@ public class DatabaseConnectionTest {
     @Test
     @DisplayName("Test getInstance - returns singleton")
     void testGetInstance_ReturnsSingleton() {
-        DatabaseConnection instance1 = DatabaseConnection.getInstance();
-        DatabaseConnection instance2 = DatabaseConnection.getInstance();
-        assertSame(instance1, instance2);
+        // Suppress error output during this test (getInstance may try MySQL connection)
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            DatabaseConnection instance1 = DatabaseConnection.getInstance();
+            DatabaseConnection instance2 = DatabaseConnection.getInstance();
+            assertSame(instance1, instance2);
+            if (instance1 != null) {
+                try {
+                    instance1.closeConnection();
+                } catch (SQLException e) {
+                    // Ignore
+                }
+            }
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
@@ -198,21 +212,40 @@ public class DatabaseConnectionTest {
     @Test
     @DisplayName("Test getInstance - thread safety")
     void testGetInstance_ThreadSafety() {
-        DatabaseConnection instance1 = DatabaseConnection.getInstance();
-        DatabaseConnection instance2 = DatabaseConnection.getInstance();
-        assertSame(instance1, instance2);
+        // Suppress error output during this test (getInstance may try MySQL connection)
+        java.io.PrintStream originalErr = System.err;
+        try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
+            DatabaseConnection instance1 = DatabaseConnection.getInstance();
+            DatabaseConnection instance2 = DatabaseConnection.getInstance();
+            assertSame(instance1, instance2);
+            if (instance1 != null) {
+                try {
+                    instance1.closeConnection();
+                } catch (SQLException e) {
+                    // Ignore
+                }
+            }
+        } finally {
+            System.setErr(originalErr);
+        }
     }
     
     @Test
     @DisplayName("Test getConnection - handles SQLException")
     void testGetConnection_HandlesSQLException() throws SQLException {
         // Test with invalid URL to trigger SQLException path
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
         try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
             DatabaseConnection badConn = new DatabaseConnection("jdbc:h2:mem:invalid", "sa", "");
             badConn.getConnection();
         } catch (SQLException e) {
             // Expected for invalid connection
             assertTrue(true);
+        } finally {
+            System.setErr(originalErr);
         }
     }
     
@@ -220,12 +253,17 @@ public class DatabaseConnectionTest {
     @DisplayName("Test getConnection - MySQL path (non-H2)")
     void testGetConnection_MySQLPath() throws SQLException {
         // Test MySQL driver path (will fail but tests code path)
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
         try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
             DatabaseConnection mysqlConn = new DatabaseConnection("jdbc:mysql://localhost:3306/test", "root", "root");
             mysqlConn.getConnection();
         } catch (SQLException e) {
             // Expected if MySQL not available, but tests the MySQL driver path
             assertTrue(true);
+        } finally {
+            System.setErr(originalErr);
         }
     }
     
@@ -298,13 +336,18 @@ public class DatabaseConnectionTest {
     @DisplayName("Test initializeConnection - SQLException handling")
     void testInitializeConnection_SQLExceptionHandling() {
         // Test that SQLException in initializeConnection is handled
+        // Suppress error output during this test
+        java.io.PrintStream originalErr = System.err;
         try {
+            System.setErr(new java.io.PrintStream(new java.io.ByteArrayOutputStream()));
             DatabaseConnection badConn = new DatabaseConnection("jdbc:invalid://test", "user", "pass");
             // Connection initialization should fail but not throw
             assertNotNull(badConn);
         } catch (Exception e) {
             // If exception is thrown, that's also valid
             assertTrue(true);
+        } finally {
+            System.setErr(originalErr);
         }
     }
     
