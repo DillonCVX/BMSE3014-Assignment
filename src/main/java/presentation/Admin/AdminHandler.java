@@ -2,6 +2,7 @@ package presentation.Admin;
 
 import controller.OrderController;
 import presentation.Food.FoodHandler;
+import presentation.Food.FoodAdminOption;
 import presentation.Food.MenuDisplay;
 import presentation.Order.OrderHandler;
 import presentation.General.UserInputHandler;
@@ -30,34 +31,60 @@ public class AdminHandler {
             MenuDisplay.displayAdminMenu();
             int adminChoice = inputHandler.readInt("Enter your choice : ");
 
-            switch (adminChoice) {
-                case 0:
+            AdminMenuOption adminOption = AdminMenuOption.getByOptionNumber(adminChoice);
+            if (adminOption == null) {
+                System.out.println("Choose 0 Until 2 Only !!!\n");
+                continue;
+            }
+
+            switch (adminOption) {
+                case FOOD_MANAGEMENT:
+                    handleFoodManagement();
+                    break;
+                case ORDER_REPORT:
+                    handleOrderReport();
+                    break;
+                case BACK_MAIN_MENU:
                     backMainMenu = false;
                     System.out.println("[]===== Back main menu =====[]\n");
                     break;
-                case 1:
-                    foodHandler.handleRegisterFood();
-                    break;
-                case 2:
-                    foodHandler.handleEditFood();
-                    break;
-                case 3:
-                    foodHandler.handleDeleteFood();
-                    break;
-                case 4:
-                    foodHandler.handleDisplayAllFoods();
-                    break;
-                case 5:
-                    handleOrderReport();
-                    break;
                 default:
-                    System.out.println("Choose 0 Until 5 Only !!!\n");
+                    System.out.println("Choose 0 Until 2 Only !!!\n");
             }
         } while (backMainMenu);
     }
 
     public void handleOrderReport() {
         MenuDisplay.displayOrderReport(orderController.getAllOrders());
+    }
+
+    private void handleFoodManagement() {
+        boolean backFoodMenu = false;
+        do {
+            MenuDisplay.displayFoodAdminMenu();
+            int choice = inputHandler.readInt("Enter your choice : ");
+            FoodAdminOption option = FoodAdminOption.fromCode(choice);
+            if (option == null) {
+                System.out.println("Choose 0 Until 4 Only !!!\n");
+                continue;
+            }
+            switch (option) {
+                case REGISTER_FOOD:
+                    foodHandler.handleRegisterFood();
+                    break;
+                case EDIT_FOOD:
+                    foodHandler.handleEditFood();
+                    break;
+                case DELETE_FOOD:
+                    foodHandler.handleDeleteFood();
+                    break;
+                case VIEW_ALL_FOOD:
+                    foodHandler.handleDisplayAllFoods();
+                    break;
+                default:
+                    backFoodMenu = true;
+            }
+        } while (!backFoodMenu);
     }
 }
 

@@ -36,7 +36,7 @@ public class Application {
     private final OrderHandler orderHandler;
     private final AdminHandler adminHandler;
     
-    Customer currentCustomer; // Package-private for testing
+    Customer currentCustomer;
     
     public Application() {
         this.scanner = new Scanner(System.in);
@@ -54,24 +54,30 @@ public class Application {
      * Run the application
      */
     public void run() {
-        final int EXIT_PASSWORD = 1890;
+        final int EXIT_PASSWORD = 1890; 
         int exitPassword = 0;
         
         do {
             MenuDisplay.displayMainMenu();
             int choice = inputHandler.readInt("Your choice : ");
+            MainMenuOption option = MainMenuOption.fromCode(choice);
             
-            switch (choice) {
-                case 1:
+            if (option == null) {
+                System.out.println("Enter Only 1 until 4 !!!\n");
+                continue;
+            }
+            
+            switch (option) {
+                case LOGIN:
                     currentCustomer = customerHandler.handleLogin();
                     break;
-                case 2:
+                case REGISTER:
                     customerHandler.handleRegister();
                     break;
-                case 3:
+                case ADMIN:
                     adminHandler.handleAdminMenu(orderHandler, currentCustomer);
                     break;
-                case 4:
+                case EXIT:
                     exitPassword = inputHandler.readInt("Enter the correct pin to exit program : ");
                     if (exitPassword == EXIT_PASSWORD) {
                         System.out.println("......Exiting Program......\n");

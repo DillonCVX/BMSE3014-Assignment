@@ -6,27 +6,24 @@ package presentation.Admin;
  * Follows OOP principles: Encapsulation
  */
 public enum AdminMenuOption {
-    REGISTER_FOOD(1, "Register New Food"),
-    EDIT_FOOD(2, "Edit Food"),
-    DELETE_FOOD(3, "Delete Food"),
-    VIEW_ALL_FOOD(4, "View All Food"),
-    ORDER_REPORT(5, "Order Report"),
+    FOOD_MANAGEMENT(1, "Food Management"),
+    ORDER_REPORT(2, "Order Report"),
     BACK_MAIN_MENU(0, "Back Main Menu");
-    
+
     private final int optionNumber;
     private final String displayText;
-    
+
     /**
      * Constructor for AdminMenuOption
      * 
      * @param optionNumber The option number
-     * @param displayText The display text for the option
+     * @param displayText  The display text for the option
      */
     AdminMenuOption(int optionNumber, String displayText) {
         this.optionNumber = optionNumber;
         this.displayText = displayText;
     }
-    
+
     /**
      * Get the option number
      * 
@@ -35,7 +32,7 @@ public enum AdminMenuOption {
     public int getOptionNumber() {
         return optionNumber;
     }
-    
+
     /**
      * Get the display text
      * 
@@ -44,37 +41,32 @@ public enum AdminMenuOption {
     public String getDisplayText() {
         return displayText;
     }
-    
+
     /**
      * Display the admin menu using enum values
      */
     public static void displayMenu() {
+        
+        String exitOption = "0.Back Main Menu";
+
         System.out.println("\n[]===============================[]");
         System.out.println("[]             Admin             []");
         System.out.println("[]===============================[]");
-        
-        // Display options in order: 1-5, then 0
-        // Fixed width: Each line must be exactly 35 chars to match border
-        // Border: []===============================[] = 35 chars
-        // Format: []        X. Text                [] = 35 chars
+
+        // Display options in order: 1-2, then 0
         for (AdminMenuOption option : AdminMenuOption.values()) {
             if (option.getOptionNumber() != 0) {
-                // Build option text: "1.Register New Food"
+                // Build option text
                 String optionText = option.getOptionNumber() + "." + option.getDisplayText();
-                // Format: [] (2) + 8 spaces + text (max 25) + [] (2) = 35 total
-                String formattedLine = String.format("[]        %-25s[]", optionText);
+                String formattedLine = String.format("        %-25s", optionText);
                 System.out.println(formattedLine);
             }
         }
-        
-        System.out.println("[]===============================[]");
-        // Display option 0 last with proper spacing - same format
-        String exitOption = "0.Back Main Menu";
-        String exitLine = String.format("[]        %-25s[]", exitOption);
+        String exitLine = String.format("        %-25s", exitOption);
         System.out.println(exitLine);
-        System.out.println("[]==============================[]\n");
+        System.out.println("[]===============================[]\n");
     }
-    
+
     /**
      * Get AdminMenuOption by option number
      * 
@@ -90,4 +82,3 @@ public enum AdminMenuOption {
         return null;
     }
 }
-

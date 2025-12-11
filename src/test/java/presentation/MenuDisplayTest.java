@@ -2,6 +2,7 @@ package presentation;
 
 import model.*;
 import presentation.Food.MenuDisplay;
+import presentation.Payment.PaymentOption;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.DisplayName;
@@ -76,7 +77,7 @@ public class MenuDisplayTest {
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         System.setOut(new PrintStream(out));
         
-        MenuDisplay.displayPaymentOptions();
+       displayPaymentOptions();
         String output = out.toString();
         
         assertTrue(output.contains("Payment"));
@@ -99,7 +100,7 @@ public class MenuDisplayTest {
         order.setOrderId(1);
         order.setStatus("COMPLETED");
         
-        MenuDisplay.displayReceipt(order);
+        displayReceipt(order);
         String output = out.toString();
         
         assertTrue(output.contains("RECEIPT"));
@@ -144,6 +145,10 @@ public class MenuDisplayTest {
         assertTrue(output.contains("Chicken Rice"));
         
         System.setOut(System.out);
+    }
+
+    public static void displayPaymentOptions() {
+        PaymentOption.displayMenu();
     }
 }
 

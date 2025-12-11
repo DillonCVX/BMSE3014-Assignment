@@ -4,11 +4,10 @@ import java.util.List;
 
 import model.Food;
 import model.Order;
-import model.OrderDetails;
-import model.PaymentMethod;
+
 import presentation.Admin.AdminMenuOption;
 import presentation.General.MainMenuOption;
-import presentation.Payment.PaymentOption;
+
 
 /**
  * Menu Display Utility
@@ -32,6 +31,21 @@ public class MenuDisplay {
     }
     
     /**
+     * Display food admin submenu
+     */
+    public static void displayFoodAdminMenu() {
+        System.out.println("\n[]===============================[]");
+        System.out.println("[]        Food Management        []");
+        System.out.println("[]===============================[]");
+        for (FoodAdminOption option : FoodAdminOption.values()) {
+            String optionText = option.getCode() + "." + option.getLabel();
+            String formattedLine = String.format("        %-25s", optionText);
+            System.out.println(formattedLine);
+        }
+        System.out.println("[]===============================[]\n");
+    }
+    
+    /**
      * Display food menu
      * 
      * @param foods List of foods to display
@@ -46,44 +60,6 @@ public class MenuDisplay {
         }
         System.out.println("0. Exit Order");
         System.out.println("==============================================================");
-    }
-    
-    /**
-     * Display payment options
-     */
-    public static void displayPaymentOptions() {
-        PaymentOption.displayMenu();
-    }
-    
-    /**
-     * Display order receipt
-     * 
-     * @param order Order to display
-     */
-    public static void displayReceipt(Order order) {
-        System.out.println("======================================================================");
-        System.out.println("                                 RECEIPT                              ");
-        System.out.println("======================================================================");
-        System.out.println("Order Id : " + order.getOrderId() + "\t\t\tDate : " + order.getOrderDate());
-        System.out.println("==============");
-        System.out.println("Cust ID : " + order.getCustomer().getCustomerId());
-        System.out.println("======================================================================");
-        
-        System.out.println("Food Id \t Food Name\t     Food Price  Qty \t\tTotal Price");
-        for (OrderDetails detail : order.getOrderDetails()) {
-            System.out.println(detail.toString());
-        }
-        System.out.println("======================================================================");
-        
-        System.out.println("Subtotal :\t\t\t\t\t\tRM " + String.format("%.2f", order.getTotalPrice()));
-        System.out.println("======================================================================");
-        
-        PaymentMethod paymentMethod = order.getPaymentMethod();
-        System.out.println(paymentMethod.getPaymentType() + "      : \t\t\t\t\t\tRM " + 
-                         String.format("%.2f", paymentMethod.getBalance()));
-        
-        // Calculate exchange (this would need payment processing info)
-        System.out.println("======================================================================");
     }
     
     /**
@@ -114,18 +90,19 @@ public class MenuDisplay {
      * @param foods List of foods to display
      */
     public static void displayAllFoods(List<Food> foods) {
-        System.out.println("===============================================================");
+        System.out.println("================================================================");
         System.out.println("                         All Food Details                      ");
-        System.out.println("===============================================================");
-        System.out.println("Food Id\t\tFood Name\t\tFood price\tFood Type");
-        
+        System.out.println("================================================================");
+        System.out.printf("%-5s %-10s %-22s %-14s %-12s%n", "No", "Food Id", "Food Name", "Food Price", "Food Type");
+        int index = 1;
         for (Food food : foods) {
-            System.out.println(food.getFoodId() + "\t\t" + 
-                             food.getFoodName() + "\t\t" + 
-                             food.getFoodPrice() + "\t\t" + 
-                             food.getFoodType());
+            System.out.printf("%-5d %-10d %-22s %-14.2f %-12s%n",
+                    index++,
+                    food.getFoodId(),
+                    food.getFoodName(),
+                    food.getFoodPrice(),
+                    food.getFoodType());
         }
-        
-        System.out.println("===============================================================");
+        System.out.println("================================================================");
     }
 }

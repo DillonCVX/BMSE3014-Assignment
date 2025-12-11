@@ -31,34 +31,10 @@ public class FoodHandler {
      * Handle food registration
      */
     public void handleRegisterFood() {
-        if (!inputHandler.readYesNo("Are you sure want to add new food (Y/N) : ")) {
-            System.out.println("====== Quit From Register New Food ====== \n");
-            return;
-        }
         
-        String foodName;
-        do {
-            foodName = inputHandler.readString("Enter your food name: ");
-            if (!foodController.validateFoodName(foodName)) {
-                System.out.println("Enter letters only!\n");
-            }
-        } while (!foodController.validateFoodName(foodName));
-        
-        double foodPrice;
-        do {
-            foodPrice = inputHandler.readDouble("Enter your food price : RM ");
-            if (!foodController.validateFoodPrice(foodPrice)) {
-                System.out.println("Price are not able to be 0 or negative and not more than RM 70 !!!\n");
-            }
-        } while (!foodController.validateFoodPrice(foodPrice));
-        
-        String foodType;
-        do {
-            foodType = inputHandler.readString("Enter your food type (Set / A la carte) : ");
-            if (!foodController.validateFoodType(foodType)) {
-                System.out.println("Type can be only Set or A la carte\n");
-            }
-        } while (!foodController.validateFoodType(foodType));
+        String foodName = readValidFoodName("Enter your food name: ");
+        double foodPrice = readValidFoodPrice("Enter your food price : RM ");
+        String foodType = readValidFoodType("Enter your food type (Set / A la carte) : ");
         
         if (inputHandler.readYesNo("Are you want to proceed to add (Y/N) : ")) {
             Food food = new Food(foodName, foodPrice, foodType);
@@ -70,13 +46,46 @@ public class FoodHandler {
             System.out.println("You have cancel registered !");
         }
     }
+
+    private String readValidFoodName(String prompt) {
+        String foodName;
+        do {
+            foodName = inputHandler.readString(prompt);
+            if (!foodController.validateFoodName(foodName)) {
+                System.out.println("Enter letters only!\n");
+            }
+        } while (!foodController.validateFoodName(foodName));
+        return foodName;
+    }
+
+    private double readValidFoodPrice(String prompt) {
+        double foodPrice;
+        do {
+            foodPrice = inputHandler.readDouble(prompt);
+            if (!foodController.validateFoodPrice(foodPrice)) {
+                System.out.println("Price are not able to be 0 or negative and not more than RM 70 !!!\n");
+            }
+        } while (!foodController.validateFoodPrice(foodPrice));
+        return foodPrice;
+    }
+
+    private String readValidFoodType(String prompt) {
+        String foodType;
+        do {
+            foodType = inputHandler.readString(prompt);
+            if (!foodController.validateFoodType(foodType)) {
+                System.out.println("Type can be only Set or A la carte\n");
+            }
+        } while (!foodController.validateFoodType(foodType));
+        return foodType;
+    }
     
     /**
      * Handle food editing
      */
     public void handleEditFood() {
         if (!inputHandler.readYesNo("Are you sure want to edit Y(YES) / N (No): ")) {
-            System.out.println("....Quit From Edit....\n");
+            System.out.println("Quit From Edit !!!\n");
             return;
         }
         
@@ -88,62 +97,32 @@ public class FoodHandler {
             return;
         }
         
-        System.out.println("===========================");
-        System.out.println("[]        DETAILS        []");
-        System.out.println("===========================");
-        System.out.println("         ID : " + food.getFoodId());
-        System.out.println("         Name : " + food.getFoodName());
-        System.out.println("         Price : " + food.getFoodPrice());
-        System.out.println("         Type : " + food.getFoodType());
-        System.out.println("===========================\n");
+        printFoodDetails(food);
         
         char continueEdit = 'Y';
         do {
-            System.out.println("=====================");
-            System.out.println("[]       EDIT      []");
-            System.out.println("=====================");
-            System.out.println("      1.Food Name    ");
-            System.out.println("      2.Food Price   ");
-            System.out.println("      3.Food Type    ");
-            System.out.println("=====================");
-            
+            printEditMenu();
             int editChoice = inputHandler.readInt("Select your choice : ");
-            
-            switch (editChoice) {
-                case 1:
-                    String foodName;
-                    do {
-                        foodName = inputHandler.readString("Enter food name : ");
-                        if (!foodController.validateFoodName(foodName)) {
-                            System.out.println("Enter letters only!\n");
-                        }
-                    } while (!foodController.validateFoodName(foodName));
-                    food.setFoodName(foodName);
-                    break;
-                case 2:
-                    double foodPrice;
-                    do {
-                        foodPrice = inputHandler.readDouble("Enter food price : ");
-                        if (!foodController.validateFoodPrice(foodPrice)) {
-                            System.out.println("Price are not able to be 0 or negative and not more than RM 70 !!!\n");
-                        }
-                    } while (!foodController.validateFoodPrice(foodPrice));
-                    food.setFoodPrice(foodPrice);
-                    break;
-                case 3:
-                    String foodType;
-                    do {
-                        foodType = inputHandler.readString("Enter food type (Set / A la carte): ");
-                        if (!foodController.validateFoodType(foodType)) {
-                            System.out.println("Type can be only Set or A la carte\n");
-                        }
-                    } while (!foodController.validateFoodType(foodType));
-                    food.setFoodType(foodType);
-                    break;
-                default:
-                    System.out.println("Other than 1 and 3 is invalid !!!! \n");
+            FoodEditOption option = FoodEditOption.fromCode(editChoice);
+
+            if (option == null) {
+                System.out.println("Other than 1, 2 and 3 is invalid !!!! \n");
+            } else {
+                switch (option) {
+                    case NAME:
+                        food.setFoodName(readValidFoodName("Enter food name : "));
+                        break;
+                    case PRICE:
+                        food.setFoodPrice(readValidFoodPrice("Enter food price : "));
+                        break;
+                    case TYPE:
+                        food.setFoodType(readValidFoodType("Enter food type (Set / A la carte): "));
+                        break;
+                    default:
+                        System.out.println("Other than 1, 2 and 3 is invalid !!!! \n");
+                }
             }
-            
+
             continueEdit = inputHandler.readChar("Do you want to continue edit id: " + food.getFoodId() + "( Y / N ) : ");
         } while (continueEdit == 'Y' || continueEdit == 'y');
         
@@ -158,7 +137,7 @@ public class FoodHandler {
      */
     public void handleDeleteFood() {
         if (!inputHandler.readYesNo("Do you want to delete a food (Y / N ) : ")) {
-            System.out.println("====== Quit From Delete Function ======\n");
+            System.out.println("Quit From Delete Function !!!n");
             return;
         }
         
@@ -179,6 +158,27 @@ public class FoodHandler {
     public void handleDisplayAllFoods() {
         List<Food> foods = foodController.getAllFoods();
         MenuDisplay.displayAllFoods(foods);
+        waitForExit();
+    }
+
+    /**
+     * Wait for user to press X to exit
+     */
+    private void waitForExit() {
+        char input;
+        do {
+            input = inputHandler.readChar("Press X to go back: ");
+        } while (input != 'X' && input != 'x');
+    }
+
+    private void printEditMenu() {
+        System.out.println("=====================");
+        System.out.println("[]       EDIT      []");
+        System.out.println("=====================");
+        for (FoodEditOption option : FoodEditOption.values()) {
+            System.out.printf("      %d.%s%n", option.getCode(), option.getLabel());
+        }
+        System.out.println("=====================");
     }
 
     private void printFoodDetails(Food food) {

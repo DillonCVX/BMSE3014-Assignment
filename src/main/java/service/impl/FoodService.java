@@ -18,7 +18,6 @@ public class FoodService implements IFoodService {
     
     // Validation constants
     private static final double MIN_PRICE = 0.01;
-    private static final double MAX_PRICE = 69.99;
     
     public FoodService(IFoodRepository foodRepository) {
         this.foodRepository = foodRepository;
@@ -31,14 +30,14 @@ public class FoodService implements IFoodService {
             throw new IllegalArgumentException("Food name must contain only letters");
         }
         if (!validateFoodPrice(food.getFoodPrice())) {
-            throw new IllegalArgumentException("Food price must be between RM " + MIN_PRICE + " and RM " + MAX_PRICE);
+            throw new IllegalArgumentException("Food price must be at least RM " + MIN_PRICE);
         }
         if (!validateFoodType(food.getFoodType())) {
             throw new IllegalArgumentException("Food type must be 'Set' or 'A la carte'");
         }
         
         // Generate food ID
-        food.setFoodId(foodRepository.getNextFoodId());
+        food.setFoodId(generateUniqueFoodId());
         
         // Save food
         return foodRepository.save(food);
@@ -56,7 +55,7 @@ public class FoodService implements IFoodService {
             throw new IllegalArgumentException("Food name must contain only letters");
         }
         if (!validateFoodPrice(food.getFoodPrice())) {
-            throw new IllegalArgumentException("Food price must be between RM " + MIN_PRICE + " and RM " + MAX_PRICE);
+            throw new IllegalArgumentException("Food price must be at least RM " + MIN_PRICE);
         }
         if (!validateFoodType(food.getFoodType())) {
             throw new IllegalArgumentException("Food type must be 'Set' or 'A la carte'");
@@ -64,6 +63,15 @@ public class FoodService implements IFoodService {
         
         // Update food
         return foodRepository.update(food);
+    }
+
+    private int generateUniqueFoodId() {
+        int nextId = foodRepository.getNextFoodId();
+        // Ensure uniqueness in case of concurrent inserts
+        while (foodRepository.existsById(nextId)) {
+            nextId++;
+        }
+        return nextId;
     }
     
     @Override
@@ -95,8 +103,7 @@ public class FoodService implements IFoodService {
     
     @Override
     public boolean validateFoodPrice(double foodPrice) {
-        // Allow boundary prices within the configured range
-        return foodPrice >= MIN_PRICE && foodPrice <= MAX_PRICE;
+        return foodPrice >= MIN_PRICE;
     }
     
     @Override

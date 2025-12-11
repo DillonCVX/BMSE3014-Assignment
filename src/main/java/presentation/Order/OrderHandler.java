@@ -6,10 +6,12 @@ import controller.OrderController;
 import model.Food;
 import model.Order;
 import model.OrderDetails;
+import model.PaymentMethod;
 import model.Customer;
 
 import presentation.Food.MenuDisplay;
 import presentation.General.UserInputHandler;
+import presentation.Payment.PaymentOption;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -109,7 +111,7 @@ public class OrderHandler {
         System.out.println("===========================================");
 
         // Payment selection
-        MenuDisplay.displayPaymentOptions();
+        displayPaymentOptions();
         int paymentChoice = inputHandler.readInt("Please Select a Payment Method :");
 
         String paymentType = null;
@@ -153,8 +155,47 @@ public class OrderHandler {
                 paymentType, cardNumber, expiryDate);
 
         if (order != null) {
-            MenuDisplay.displayReceipt(order);
+            displayReceipt(order);
         }
     }
+
+        /**
+     * Display order receipt
+     * 
+     * @param order Order to display
+     */
+    public static void displayReceipt(Order order) {
+        System.out.println("======================================================================");
+        System.out.println("                                 RECEIPT                              ");
+        System.out.println("======================================================================");
+        System.out.println("Order Id : " + order.getOrderId() + "\t\t\tDate : " + order.getOrderDate());
+        System.out.println("==============");
+        System.out.println("Cust ID : " + order.getCustomer().getCustomerId());
+        System.out.println("======================================================================");
+        
+        System.out.println("Food Id \t Food Name\t     Food Price  Qty \t\tTotal Price");
+        for (OrderDetails detail : order.getOrderDetails()) {
+            System.out.println(detail.toString());
+        }
+        System.out.println("======================================================================");
+        
+        System.out.println("Subtotal :\t\t\t\t\t\tRM " + String.format("%.2f", order.getTotalPrice()));
+        System.out.println("======================================================================");
+        
+        PaymentMethod paymentMethod = order.getPaymentMethod();
+        System.out.println(paymentMethod.getPaymentType() + "      : \t\t\t\t\t\tRM " + 
+                         String.format("%.2f", paymentMethod.getBalance()));
+        
+        // Calculate exchange (this would need payment processing info)
+        System.out.println("======================================================================");
+    }
+
+        /**
+     * Display payment options
+     */
+    public static void displayPaymentOptions() {
+        PaymentOption.displayMenu();
+    }
+    
 }
 
