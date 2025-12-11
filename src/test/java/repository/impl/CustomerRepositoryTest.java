@@ -548,7 +548,7 @@ public class CustomerRepositoryTest {
         customer.setPhoneNumber("0244444444");
         customer.setGender("Male");
         customer.setPassword("temp");
-        Customer saved = repository.save(customer);
+        repository.save(customer);
         
         // Delete it (we can't easily delete, but we can test the path)
         int nextId = repository.getNextCustomerId();

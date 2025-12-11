@@ -2,6 +2,7 @@ presentation\General\Application$1.class
 presentation\General\MainMenuOption.class
 model\TNGPayment.class
 repository\impl\PaymentMethodRepository.class
+service\interfaces\IAdminService.class
 service\interfaces\ICustomerService.class
 service\impl\CustomerService.class
 config\ConnectionProvider.class
@@ -14,6 +15,7 @@ service\impl\PaymentService.class
 model\Customer.class
 service\impl\OrderService.class
 repository\impl\OrderRepository.class
+controller\AdminController.class
 config\DatabaseConnection.class
 service\interfaces\IFoodService.class
 repository\interfaces\IFoodRepository.class
@@ -24,9 +26,11 @@ model\Payment.class
 presentation\Payment\PaymentOption.class
 controller\FoodController$FoodOperation.class
 service\interfaces\IPaymentService.class
+presentation\Order\OrderMenuDisplay.class
 presentation\Food\FoodManagementOption.class
 presentation\General\UserCancelledException.class
 presentation\Food\MenuDisplay.class
+repository\impl\AdminRepository.class
 model\Food.class
 presentation\Admin\AdminMenuOption.class
 presentation\Main.class
@@ -36,8 +40,10 @@ repository\impl\FoodRepository.class
 presentation\Admin\AdminHandler$1.class
 model\BankPayment.class
 presentation\Admin\AdminHandler.class
+repository\interfaces\IAdminRepository.class
 controller\PaymentController.class
 presentation\Food\FoodEditOption.class
+service\impl\AdminService.class
 repository\interfaces\IOrderRepository.class
 model\PaymentMethod.class
 service\impl\FoodService.class
@@ -47,3 +53,5 @@ model\OrderDetails.class
 presentation\Order\OrderHandler.class
 model\Order.class
 presentation\General\Application.class
+model\Order$Builder.class
+model\Admin.class

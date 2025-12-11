@@ -118,7 +118,8 @@ public class ApplicationTest {
     @Test
     @DisplayName("Test handleAdminMenu - invalid choice")
     void testHandleAdminMenu_InvalidChoice() {
-        System.setIn(new ByteArrayInputStream("99\n0\n".getBytes()));
+        // Need login credentials first: admin\n123\n
+        System.setIn(new ByteArrayInputStream("admin\n123\n99\n0\n".getBytes()));
         Application app = new Application();
         app.handleAdminMenu();
         String output = outContent.toString();
@@ -129,7 +130,8 @@ public class ApplicationTest {
     @Test
     @DisplayName("Test handleAdminMenu - view all foods option")
     void testHandleAdminMenu_ViewAllFoods() {
-        System.setIn(new ByteArrayInputStream("4\n0\n".getBytes()));
+        // Need login credentials first: admin\n123\n
+        System.setIn(new ByteArrayInputStream("admin\n123\n4\n0\n".getBytes()));
         Application app = new Application();
         app.handleAdminMenu();
         String output = outContent.toString();
@@ -140,7 +142,8 @@ public class ApplicationTest {
     @Test
     @DisplayName("Test handleAdminMenu - order report option")
     void testHandleAdminMenu_OrderReport() {
-        System.setIn(new ByteArrayInputStream("5\n0\n".getBytes()));
+        // Need login credentials first: admin\n123\n
+        System.setIn(new ByteArrayInputStream("admin\n123\n2\n0\n".getBytes()));
         Application app = new Application();
         app.handleAdminMenu();
         String output = outContent.toString();
@@ -468,7 +471,8 @@ public class ApplicationTest {
         // Option 1: Food Management -> 0 to exit back
         // Option 2: Order Report
         // Option 0: Back to Main Menu
-        String input = "1\n0\n2\n0\n";
+        // Need login credentials first: admin\n123\n
+        String input = "admin\n123\n1\n0\n2\n0\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Application app = new Application();
         app.handleAdminMenu();
@@ -531,7 +535,8 @@ public class ApplicationTest {
     @Test
     @DisplayName("Test run - admin menu option")
     void testRun_AdminMenuOption() {
-        String input = "3\n0\n4\n1890\n";
+        // Need login credentials for admin menu: admin\n123\n
+        String input = "3\nadmin\n123\n0\n4\n1890\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Application app = new Application();
         try {
