@@ -93,6 +93,11 @@ public class FoodService implements IFoodService {
     }
     
     @Override
+    public Optional<Food> getFoodByName(String foodName) {
+        return foodRepository.findByName(foodName);
+    }
+    
+    @Override
     public boolean validateFoodName(String foodName) {
         if (foodName == null || foodName.trim().isEmpty()) {
             return false;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="repository.impl.FoodRepositoryTest" time="0.346" tests="71" errors="0" skipped="0" failures="0">
+<testsuite xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="https://maven.apache.org/surefire/maven-surefire-plugin/xsd/surefire-test-report-3.0.xsd" version="3.0" name="repository.impl.FoodRepositoryTest" time="0.375" tests="70" errors="0" skipped="0" failures="0">
   <properties>
     <property name="java.specification.version" value="17"/>
     <property name="sun.cpu.isalist" value="amd64"/>
@@ -15,7 +15,7 @@
     <property name="sun.java.launcher" value="SUN_STANDARD"/>
     <property name="user.country" value="US"/>
     <property name="sun.boot.library.path" value="C:\Program Files\Java\jdk-17\bin"/>
-    <property name="sun.java.command" value="C:\Users\PC\AppData\Local\Temp\surefire15877557749636532760\surefirebooter-20251209060428208_3.jar C:\Users\PC\AppData\Local\Temp\surefire15877557749636532760 2025-12-09T06-04-28_026-jvmRun1 surefire-20251209060428208_1tmp surefire_0-20251209060428208_2tmp"/>
+    <property name="sun.java.command" value="C:\Users\PC\AppData\Local\Temp\surefire1626808477944664705\surefirebooter-20251211205854875_3.jar C:\Users\PC\AppData\Local\Temp\surefire1626808477944664705 2025-12-11T20-58-54_699-jvmRun1 surefire-20251211205854875_1tmp surefire_0-20251211205854875_2tmp"/>
     <property name="jdk.debug" value="release"/>
     <property name="surefire.test.class.path" value="C:\Users\PC\OneDrive\Documents\BMSE3014-Assignment\target\test-classes;C:\Users\PC\OneDrive\Documents\BMSE3014-Assignment\target\classes;C:\Users\PC\.m2\repository\org\junit\jupiter\junit-jupiter\5.10.2\junit-jupiter-5.10.2.jar;C:\Users\PC\.m2\repository\org\junit\jupiter\junit-jupiter-api\5.10.2\junit-jupiter-api-5.10.2.jar;C:\Users\PC\.m2\repository\org\opentest4j\opentest4j\1.3.0\opentest4j-1.3.0.jar;C:\Users\PC\.m2\repository\org\junit\platform\junit-platform-commons\1.10.2\junit-platform-commons-1.10.2.jar;C:\Users\PC\.m2\repository\org\apiguardian\apiguardian-api\1.1.2\apiguardian-api-1.1.2.jar;C:\Users\PC\.m2\repository\org\junit\jupiter\junit-jupiter-params\5.10.2\junit-jupiter-params-5.10.2.jar;C:\Users\PC\.m2\repository\org\junit\jupiter\junit-jupiter-engine\5.10.2\junit-jupiter-engine-5.10.2.jar;C:\Users\PC\.m2\repository\org\junit\platform\junit-platform-engine\1.10.2\junit-platform-engine-1.10.2.jar;C:\Users\PC\.m2\repository\com\mysql\mysql-connector-j\8.0.33\mysql-connector-j-8.0.33.jar;C:\Users\PC\.m2\repository\com\google\protobuf\protobuf-java\3.21.9\protobuf-java-3.21.9.jar;C:\Users\PC\.m2\repository\com\h2database\h2\2.2.224\h2-2.2.224.jar;C:\Users\PC\.m2\repository\org\mockito\mockito-core\5.11.0\mockito-core-5.11.0.jar;C:\Users\PC\.m2\repository\net\bytebuddy\byte-buddy\1.14.12\byte-buddy-1.14.12.jar;C:\Users\PC\.m2\repository\net\bytebuddy\byte-buddy-agent\1.14.12\byte-buddy-agent-1.14.12.jar;C:\Users\PC\.m2\repository\org\objenesis\objenesis\3.3\objenesis-3.3.jar;C:\Users\PC\.m2\repository\org\mockito\mockito-junit-jupiter\5.11.0\mockito-junit-jupiter-5.11.0.jar;"/>
     <property name="sun.cpu.endian" value="little"/>
@@ -30,7 +30,7 @@
     <property name="line.separator" value="&#10;"/>
     <property name="java.vm.specification.vendor" value="Oracle Corporation"/>
     <property name="java.specification.name" value="Java Platform API Specification"/>
-    <property name="surefire.real.class.path" value="C:\Users\PC\AppData\Local\Temp\surefire15877557749636532760\surefirebooter-20251209060428208_3.jar"/>
+    <property name="surefire.real.class.path" value="C:\Users\PC\AppData\Local\Temp\surefire1626808477944664705\surefirebooter-20251211205854875_3.jar"/>
     <property name="user.script" value=""/>
     <property name="sun.management.compiler" value="HotSpot 64-Bit Tiered Compilers"/>
     <property name="java.runtime.version" value="17.0.12+8-LTS-286"/>
@@ -56,75 +56,74 @@
     <property name="sun.io.unicode.encoding" value="UnicodeLittle"/>
     <property name="java.class.version" value="61.0"/>
   </properties>
-  <testcase name="testExistsById_CountEqualsZero" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testFindById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testGetNextFoodId_NoFoods" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testGetNextFoodId_MaxIdConditionGreaterOrEqual" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testExistsById_CountGreaterThanZero" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testGetNextFoodId_MaxIdConditionLessThan" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testSave_NewFood" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testExistsById_CountZero" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testFindById_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testExistsById_CountEqualsZero" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testFindById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testGetNextFoodId_NoFoods" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testGetNextFoodId_MaxIdConditionGreaterOrEqual" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testExistsById_CountGreaterThanZero" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testGetNextFoodId_MaxIdConditionLessThan" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
+  <testcase name="testSave_NewFood" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testExistsById_CountZero" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testFindById_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testUpdate_AllFieldsSimultaneously" classname="repository.impl.FoodRepositoryTest" time="0.009"/>
-  <testcase name="testExistsById_ExistingAndNonExisting" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testFindAll_ExactlyOneFood" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
-  <testcase name="testSave_AffectedRowsPath" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testExistsById_ExistingAndNonExisting" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testFindAll_ExactlyOneFood" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testSave_AffectedRowsPath" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testUpdate_AllFieldsUpdated" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testFindAll_MultipleFoodsOrdering" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testFindAll" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testFindAll_MultipleFoodsOrdering" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testFindAll" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testFindAll_WhileLoopTermination" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
   <testcase name="testSave_MultipleFoods" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
   <testcase name="testSave_WithGeneratedId" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testUpdate_VerifyDatabaseUpdate" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testSave_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testFindAll_WhileLoopMultipleRows" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
-  <testcase name="testSave_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testDeleteById_VerifyDeletion" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
-  <testcase name="testFindById_NonExisting" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testDeleteById_NonExistent" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
+  <testcase name="testUpdate_VerifyDatabaseUpdate" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testSave_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
+  <testcase name="testFindAll_WhileLoopMultipleRows" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testSave_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testDeleteById_VerifyDeletion" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testFindById_NonExisting" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testDeleteById_NonExistent" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testDeleteById_NonExisting" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testFindAll_EmptyResultSet" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testFindAll_IncludesNewFoods" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testExistsById_CountGreaterThanZeroPath" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testUpdate_ExecuteUpdatePath" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testGetNextFoodId_MaxIdLessThan2000Returns2000" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testDeleteById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testGetNextFoodId_MaxIdGreaterOrEqual2000" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testUpdate_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testUpdate_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testExistsById_MultipleChecks" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testGetNextFoodId_AfterDeletingAll" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testGetNextFoodId" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testDeleteById_ExecuteUpdatePositive" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testExistsById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testSave_WithExistingId" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testSave_MultipleSequentialSaves" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testFindAll_IncludesNewFoods" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testExistsById_CountGreaterThanZeroPath" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testUpdate_ExecuteUpdatePath" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testGetNextFoodId_MaxIdLessThan2000Returns2000" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testDeleteById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testGetNextFoodId_MaxIdGreaterOrEqual2000" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testUpdate_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testUpdate_BigDecimalConversion" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testExistsById_MultipleChecks" classname="repository.impl.FoodRepositoryTest" time="0.009"/>
+  <testcase name="testGetNextFoodId_AfterDeletingAll" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testGetNextFoodId" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
+  <testcase name="testDeleteById_ExecuteUpdatePositive" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
+  <testcase name="testExistsById_Existing" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
+  <testcase name="testSave_WithExistingId" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testSave_MultipleSequentialSaves" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
   <testcase name="testSave_VerifyAllFieldsMapped" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
-  <testcase name="testSave_AffectedRowsZeroPath" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testUpdate_ExistingFood" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testGetNextFoodId_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testDeleteById_ExecuteUpdateReturnsZero" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testMapResultSetToFood_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testUpdate_NonExistentFood" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testSave_GeneratedKeysNext" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testSave_GeneratedKeysPath" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testGetNextFoodId_MaxIdLessThan2000" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testGetNextFoodId_AfterMultipleSaves" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testSave_AffectedRowsZeroPath" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testUpdate_ExistingFood" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testGetNextFoodId_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
+  <testcase name="testDeleteById_ExecuteUpdateReturnsZero" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testMapResultSetToFood_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testUpdate_NonExistentFood" classname="repository.impl.FoodRepositoryTest" time="0.009"/>
+  <testcase name="testSave_GeneratedKeysNext" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testSave_GeneratedKeysPath" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testGetNextFoodId_MaxIdLessThan2000" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testGetNextFoodId_AfterMultipleSaves" classname="repository.impl.FoodRepositoryTest" time="0.007"/>
   <testcase name="testGetNextFoodId_MaxIdGreaterThan2000" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testSave_MultipleSavesUniqueIds" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testExistsById_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
-  <testcase name="testFindAll_VerifyAllFields" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testExistsById_NonExisting" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
-  <testcase name="testFindAll_OrderAndContent" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
-  <testcase name="testFindById_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testSave_MultipleSavesUniqueIds" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testExistsById_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testFindAll_VerifyAllFields" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
+  <testcase name="testExistsById_NonExisting" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
+  <testcase name="testFindAll_OrderAndContent" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testFindById_AllFields" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
   <testcase name="testFindAll_NoDuplicates" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
-  <testcase name="testGetNextFoodId_MaxIdExactly2000" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testGetNextFoodId_MaxIdExactly2000" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
   <testcase name="testSave_GeneratedKeysNextPath" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testDeleteById_ExecuteUpdateReturnsPositive" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
-  <testcase name="testFindById_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testFindById_ResultSetNextTrue" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testFindById_VerifyAllFields" classname="repository.impl.FoodRepositoryTest" time="0.003"/>
-  <testcase name="testUpdate_WithSameValues" classname="repository.impl.FoodRepositoryTest" time="0.006"/>
+  <testcase name="testDeleteById_ExecuteUpdateReturnsPositive" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
+  <testcase name="testFindById_ResultSetNextFalse" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testFindById_ResultSetNextTrue" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
+  <testcase name="testFindById_VerifyAllFields" classname="repository.impl.FoodRepositoryTest" time="0.004"/>
+  <testcase name="testUpdate_WithSameValues" classname="repository.impl.FoodRepositoryTest" time="0.008"/>
   <testcase name="testDefaultConstructor" classname="repository.impl.FoodRepositoryTest" time="0.002"/>
-  <testcase name="testGetNextFoodId_NullMaxId" classname="repository.impl.FoodRepositoryTest" time="0.005"/>
 </testsuite>

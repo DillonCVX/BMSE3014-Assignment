@@ -4,6 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import model.Food;
+import repository.impl.FoodRepository;
+import service.impl.FoodService;
 import service.interfaces.IFoodService;
 
 /**
@@ -15,9 +17,14 @@ public class FoodController {
     
     private final IFoodService foodService;
     
-<span class="fc" id="L18">    public FoodController(IFoodService foodService) {</span>
-<span class="fc" id="L19">        this.foodService = foodService;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L20">    public FoodController(IFoodService foodService) {</span>
+<span class="fc" id="L21">        this.foodService = foodService;</span>
+<span class="fc" id="L22">    }</span>
+    
+    // Default constructor wiring service and repository
+    public FoodController() {
+<span class="fc" id="L26">        this(new FoodService(new FoodRepository()));</span>
+<span class="fc" id="L27">    }</span>
     
     /**
      * Register a new food item
@@ -26,12 +33,7 @@ public class FoodController {
      * @return Registered food if successful, null if validation fails
      */
     public Food registerFood(Food food) {
-        try {
-<span class="fc" id="L30">            return foodService.registerFood(food);</span>
-<span class="fc" id="L31">        } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L32">            System.out.println(&quot;Registration failed: &quot; + e.getMessage());</span>
-<span class="fc" id="L33">            return null;</span>
-        }
+<span class="fc" id="L36">        return executeFoodOperation(() -&gt; foodService.registerFood(food), &quot;Registration&quot;);</span>
     }
     
     /**
@@ -41,12 +43,31 @@ public class FoodController {
      * @return Updated food if successful, null if validation fails
      */
     public Food updateFood(Food food) {
+<span class="fc" id="L46">        return executeFoodOperation(() -&gt; foodService.updateFood(food), &quot;Update&quot;);</span>
+    }
+
+    /**
+     * Execute food operation with error handling
+     * 
+     * @param operation Food operation to execute
+     * @param operationName Name of the operation for error messages
+     * @return Result of operation or null if failed
+     */
+    private Food executeFoodOperation(FoodOperation operation, String operationName) {
         try {
-<span class="fc" id="L45">            return foodService.updateFood(food);</span>
-<span class="nc" id="L46">        } catch (IllegalArgumentException e) {</span>
-<span class="nc" id="L47">            System.out.println(&quot;Update failed: &quot; + e.getMessage());</span>
-<span class="nc" id="L48">            return null;</span>
+<span class="fc" id="L58">            return operation.execute();</span>
+<span class="fc" id="L59">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L60">            System.out.println(operationName + &quot; failed: &quot; + e.getMessage());</span>
+<span class="fc" id="L61">            return null;</span>
         }
+    }
+
+    /**
+     * Functional interface for food operations
+     */
+    @FunctionalInterface
+    private interface FoodOperation {
+        Food execute() throws IllegalArgumentException;
     }
     
     /**
@@ -56,11 +77,11 @@ public class FoodController {
      * @return true if deleted successfully
      */
     public boolean deleteFood(int foodId) {
-<span class="fc" id="L59">        boolean deleted = foodService.deleteFood(foodId);</span>
-<span class="fc bfc" id="L60" title="All 2 branches covered.">        if (!deleted) {</span>
-<span class="fc" id="L61">            System.out.println(&quot;Food with ID &quot; + foodId + &quot; not found or could not be deleted&quot;);</span>
+<span class="fc" id="L80">        boolean deleted = foodService.deleteFood(foodId);</span>
+<span class="fc bfc" id="L81" title="All 2 branches covered.">        if (!deleted) {</span>
+<span class="fc" id="L82">            System.out.println(&quot;Food with ID &quot; + foodId + &quot; not found or could not be deleted&quot;);</span>
         }
-<span class="fc" id="L63">        return deleted;</span>
+<span class="fc" id="L84">        return deleted;</span>
     }
     
     /**
@@ -69,7 +90,7 @@ public class FoodController {
      * @return List of all foods
      */
     public List&lt;Food&gt; getAllFoods() {
-<span class="fc" id="L72">        return foodService.getAllFoods();</span>
+<span class="fc" id="L93">        return foodService.getAllFoods();</span>
     }
     
     /**
@@ -79,8 +100,19 @@ public class FoodController {
      * @return Food if found, null otherwise
      */
     public Food getFoodById(int foodId) {
-<span class="fc" id="L82">        Optional&lt;Food&gt; foodOpt = foodService.getFoodById(foodId);</span>
-<span class="fc" id="L83">        return foodOpt.orElse(null);</span>
+<span class="fc" id="L103">        Optional&lt;Food&gt; foodOpt = foodService.getFoodById(foodId);</span>
+<span class="fc" id="L104">        return foodOpt.orElse(null);</span>
+    }
+    
+    /**
+     * Get food by name (case-insensitive)
+     * 
+     * @param foodName Food name
+     * @return Food if found, null otherwise
+     */
+    public Food getFoodByName(String foodName) {
+<span class="fc" id="L114">        Optional&lt;Food&gt; foodOpt = foodService.getFoodByName(foodName);</span>
+<span class="fc" id="L115">        return foodOpt.orElse(null);</span>
     }
     
     /**
@@ -90,7 +122,7 @@ public class FoodController {
      * @return true if valid
      */
     public boolean validateFoodName(String foodName) {
-<span class="fc" id="L93">        return foodService.validateFoodName(foodName);</span>
+<span class="fc" id="L125">        return foodService.validateFoodName(foodName);</span>
     }
     
     /**
@@ -100,7 +132,7 @@ public class FoodController {
      * @return true if valid
      */
     public boolean validateFoodPrice(double foodPrice) {
-<span class="fc" id="L103">        return foodService.validateFoodPrice(foodPrice);</span>
+<span class="fc" id="L135">        return foodService.validateFoodPrice(foodPrice);</span>
     }
     
     /**
@@ -110,7 +142,17 @@ public class FoodController {
      * @return true if valid
      */
     public boolean validateFoodType(String foodType) {
-<span class="fc" id="L113">        return foodService.validateFoodType(foodType);</span>
+<span class="fc" id="L145">        return foodService.validateFoodType(foodType);</span>
+    }
+    
+    /**
+     * Check if food name is unique (case-insensitive)
+     * 
+     * @param foodName Food name to check
+     * @return true if unique, false if already exists
+     */
+    public boolean isFoodNameUnique(String foodName) {
+<span class="fc" id="L155">        return foodService.isFoodNameUnique(foodName);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

@@ -21,6 +21,14 @@ public interface IFoodRepository {
     Optional<Food> findById(int foodId);
     
     /**
+     * Find food by name (case-insensitive)
+     * 
+     * @param foodName Food name
+     * @return Optional containing food if found
+     */
+    Optional<Food> findByName(String foodName);
+    
+    /**
      * Find all foods
      * 
      * @return List of all foods

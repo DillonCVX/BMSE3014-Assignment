@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>AdminMenuOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bmse3014-assignment</a> &gt; <a href="index.source.html" class="el_package">presentation.Admin</a> &gt; <span class="el_source">AdminMenuOption.java</span></div><h1>AdminMenuOption.java</h1><pre class="source lang-java linenums">package presentation.Admin;
+
+/**
+ * Admin Menu Option Enum
+ * Represents admin menu options with their display text
+ * Follows OOP principles: Encapsulation
+ */
+<span class="fc" id="L8">public enum AdminMenuOption {</span>
+<span class="fc" id="L9">    FOOD_MANAGEMENT(1, &quot;Food Management&quot;),</span>
+<span class="fc" id="L10">    ORDER_REPORT(2, &quot;Order Report&quot;),</span>
+<span class="fc" id="L11">    BACK_MAIN_MENU(0, &quot;Back Main Menu&quot;);</span>
+
+    private final int optionNumber;
+    private final String displayText;
+
+    /**
+     * Constructor for AdminMenuOption
+     * 
+     * @param optionNumber The option number
+     * @param displayText  The display text for the option
+     */
+<span class="fc" id="L22">    AdminMenuOption(int optionNumber, String displayText) {</span>
+<span class="fc" id="L23">        this.optionNumber = optionNumber;</span>
+<span class="fc" id="L24">        this.displayText = displayText;</span>
+<span class="fc" id="L25">    }</span>
+
+    /**
+     * Get the option number
+     * 
+     * @return The option number
+     */
+    public int getOptionNumber() {
+<span class="fc" id="L33">        return optionNumber;</span>
+    }
+
+    /**
+     * Get the display text
+     * 
+     * @return The display text
+     */
+    public String getDisplayText() {
+<span class="fc" id="L42">        return displayText;</span>
+    }
+
+    /**
+     * Display the admin menu using enum values
+     */
+    public static void displayMenu() {
+        
+<span class="fc" id="L50">        String exitOption = &quot;0.Back Main Menu&quot;;</span>
+
+<span class="fc" id="L52">        System.out.println(&quot;\n[]===============================[]&quot;);</span>
+<span class="fc" id="L53">        System.out.println(&quot;[]             Admin             []&quot;);</span>
+<span class="fc" id="L54">        System.out.println(&quot;[]===============================[]&quot;);</span>
+
+        // Display options in order: 1-2, then 0
+<span class="fc bfc" id="L57" title="All 2 branches covered.">        for (AdminMenuOption option : AdminMenuOption.values()) {</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (option.getOptionNumber() != 0) {</span>
+                // Build option text
+<span class="fc" id="L60">                String optionText = option.getOptionNumber() + &quot;.&quot; + option.getDisplayText();</span>
+<span class="fc" id="L61">                String formattedLine = String.format(&quot;        %-25s&quot;, optionText);</span>
+<span class="fc" id="L62">                System.out.println(formattedLine);</span>
+            }
+        }
+<span class="fc" id="L65">        String exitLine = String.format(&quot;        %-25s&quot;, exitOption);</span>
+<span class="fc" id="L66">        System.out.println(exitLine);</span>
+<span class="fc" id="L67">        System.out.println(&quot;[]===============================[]\n&quot;);</span>
+<span class="fc" id="L68">    }</span>
+
+    /**
+     * Get AdminMenuOption by option number
+     * 
+     * @param optionNumber The option number
+     * @return AdminMenuOption or null if not found
+     */
+    public static AdminMenuOption getByOptionNumber(int optionNumber) {
+<span class="fc bfc" id="L77" title="All 2 branches covered.">        for (AdminMenuOption option : AdminMenuOption.values()) {</span>
+<span class="fc bfc" id="L78" title="All 2 branches covered.">            if (option.getOptionNumber() == optionNumber) {</span>
+<span class="fc" id="L79">                return option;</span>
+            }
+        }
+<span class="fc" id="L82">        return null;</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

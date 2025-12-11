@@ -1,6 +1,4 @@
 package presentation.General;
-
-import java.util.InputMismatchException;
 import java.util.Scanner;
 
 /**
@@ -18,40 +16,50 @@ public class UserInputHandler {
     
     /**
      * Read integer input with validation
+     * User can enter 'X' or 'x' to cancel
      * 
      * @param prompt Prompt message
      * @return Integer value
+     * @throws UserCancelledException if user enters X to cancel
      */
     public int readInt(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
-                int value = scanner.nextInt();
-                scanner.nextLine(); // Consume newline
-                return value;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter an integer.");
-                scanner.next(); // Consume invalid input
+                String input = scanner.nextLine().trim();
+                
+                if (input.equalsIgnoreCase("X")) {
+                    throw new UserCancelledException();
+                }
+                
+                return Integer.parseInt(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter an integer or X to cancel.");
             }
         }
     }
     
     /**
      * Read double input with validation
+     * User can enter 'X' or 'x' to cancel
      * 
      * @param prompt Prompt message
      * @return Double value
+     * @throws UserCancelledException if user enters X to cancel
      */
     public double readDouble(String prompt) {
         while (true) {
             try {
                 System.out.print(prompt);
-                double value = scanner.nextDouble();
-                scanner.nextLine(); // Consume newline
-                return value;
-            } catch (InputMismatchException e) {
-                System.out.println("Invalid input. Please enter a number.");
-                scanner.next(); // Consume invalid input
+                String input = scanner.nextLine().trim();
+                
+                if (input.equalsIgnoreCase("X")) {
+                    throw new UserCancelledException();
+                }
+                
+                return Double.parseDouble(input);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a number or X to cancel.");
             }
         }
     }

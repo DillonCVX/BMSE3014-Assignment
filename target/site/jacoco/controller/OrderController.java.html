@@ -4,6 +4,11 @@ import java.util.List;
 
 import model.Order;
 import model.OrderDetails;
+import repository.impl.CustomerRepository;
+import repository.impl.OrderRepository;
+import repository.impl.PaymentMethodRepository;
+import service.impl.OrderService;
+import service.impl.PaymentService;
 import service.interfaces.IOrderService;
 
 /**
@@ -15,9 +20,19 @@ public class OrderController {
     
     private final IOrderService orderService;
     
-<span class="fc" id="L18">    public OrderController(IOrderService orderService) {</span>
-<span class="fc" id="L19">        this.orderService = orderService;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L23">    public OrderController(IOrderService orderService) {</span>
+<span class="fc" id="L24">        this.orderService = orderService;</span>
+<span class="fc" id="L25">    }</span>
+    
+    // Default constructor wiring services and repositories
+    public OrderController() {
+<span class="fc" id="L29">        this(new OrderService(</span>
+                new OrderRepository(),
+                new CustomerRepository(),
+                new PaymentMethodRepository(),
+                new PaymentService(new PaymentMethodRepository())
+        ));
+<span class="fc" id="L35">    }</span>
     
     /**
      * Create a new order
@@ -32,10 +47,10 @@ public class OrderController {
     public Order createOrder(int customerId, List&lt;OrderDetails&gt; orderDetailsList, 
                            String paymentType, String cardNumber, String expiryDate) {
         try {
-<span class="fc" id="L35">            return orderService.createOrder(customerId, orderDetailsList, paymentType, cardNumber, expiryDate);</span>
-<span class="fc" id="L36">        } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L37">            System.out.println(&quot;Order creation failed: &quot; + e.getMessage());</span>
-<span class="fc" id="L38">            return null;</span>
+<span class="fc" id="L50">            return orderService.createOrder(customerId, orderDetailsList, paymentType, cardNumber, expiryDate);</span>
+<span class="fc" id="L51">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L52">            System.out.println(&quot;Order creation failed: &quot; + e.getMessage());</span>
+<span class="fc" id="L53">            return null;</span>
         }
     }
     
@@ -45,7 +60,7 @@ public class OrderController {
      * @return List of all orders
      */
     public List&lt;Order&gt; getAllOrders() {
-<span class="fc" id="L48">        return orderService.getAllOrders();</span>
+<span class="fc" id="L63">        return orderService.getAllOrders();</span>
     }
     
     /**
@@ -55,7 +70,7 @@ public class OrderController {
      * @return List of orders
      */
     public List&lt;Order&gt; getOrdersByCustomerId(int customerId) {
-<span class="fc" id="L58">        return orderService.getOrdersByCustomerId(customerId);</span>
+<span class="fc" id="L73">        return orderService.getOrdersByCustomerId(customerId);</span>
     }
     
     /**
@@ -65,7 +80,7 @@ public class OrderController {
      * @return Total price
      */
     public double calculateTotalPrice(List&lt;OrderDetails&gt; orderDetailsList) {
-<span class="fc" id="L68">        return orderService.calculateTotalPrice(orderDetailsList);</span>
+<span class="fc" id="L83">        return orderService.calculateTotalPrice(orderDetailsList);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

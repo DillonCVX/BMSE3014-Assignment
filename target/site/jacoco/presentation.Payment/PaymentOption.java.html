@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>PaymentOption.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">bmse3014-assignment</a> &gt; <a href="index.source.html" class="el_package">presentation.Payment</a> &gt; <span class="el_source">PaymentOption.java</span></div><h1>PaymentOption.java</h1><pre class="source lang-java linenums">package presentation.Payment;
+
+/**
+ * Payment Option Enum
+ * Represents payment method options with their display text
+ * Follows OOP principles: Encapsulation
+ */
+<span class="fc" id="L8">public enum PaymentOption {</span>
+<span class="fc" id="L9">    TNG(1, &quot;TNG&quot;),</span>
+<span class="fc" id="L10">    GRAB(2, &quot;Grab&quot;),</span>
+<span class="fc" id="L11">    BANK(3, &quot;Bank&quot;);</span>
+    
+    private final int optionNumber;
+    private final String displayText;
+    
+    /**
+     * Constructor for PaymentOption
+     * 
+     * @param optionNumber The option number
+     * @param displayText The display text for the option
+     */
+<span class="fc" id="L22">    PaymentOption(int optionNumber, String displayText) {</span>
+<span class="fc" id="L23">        this.optionNumber = optionNumber;</span>
+<span class="fc" id="L24">        this.displayText = displayText;</span>
+<span class="fc" id="L25">    }</span>
+    
+    /**
+     * Get the option number
+     * 
+     * @return The option number
+     */
+    public int getOptionNumber() {
+<span class="fc" id="L33">        return optionNumber;</span>
+    }
+    
+    /**
+     * Get the display text
+     * 
+     * @return The display text
+     */
+    public String getDisplayText() {
+<span class="fc" id="L42">        return displayText;</span>
+    }
+    
+    /**
+     * Display the payment options menu using enum values
+     */
+    public static void displayMenu() {
+<span class="fc" id="L49">        System.out.println(&quot;\t===================&quot;);</span>
+<span class="fc" id="L50">        System.out.println(&quot;\t      Payment      &quot;);</span>
+<span class="fc" id="L51">        System.out.println(&quot;\t===================&quot;);</span>
+        
+        // Build the payment options line
+<span class="fc" id="L54">        StringBuilder paymentLine = new StringBuilder(&quot;\t&quot;);</span>
+<span class="fc bfc" id="L55" title="All 2 branches covered.">        for (int i = 0; i &lt; PaymentOption.values().length; i++) {</span>
+<span class="fc" id="L56">            PaymentOption option = PaymentOption.values()[i];</span>
+<span class="fc" id="L57">            paymentLine.append(option.getOptionNumber()).append(&quot;.&quot;).append(option.getDisplayText());</span>
+<span class="fc bfc" id="L58" title="All 2 branches covered.">            if (i &lt; PaymentOption.values().length - 1) {</span>
+<span class="fc" id="L59">                paymentLine.append(&quot; &quot;);</span>
+            }
+        }
+<span class="fc" id="L62">        System.out.println(paymentLine.toString());</span>
+        
+<span class="fc" id="L64">        System.out.println(&quot;\t===================&quot;);</span>
+<span class="fc" id="L65">    }</span>
+    
+    /**
+     * Get PaymentOption by option number
+     * 
+     * @param optionNumber The option number
+     * @return PaymentOption or null if not found
+     */
+    public static PaymentOption getByOptionNumber(int optionNumber) {
+<span class="nc bnc" id="L74" title="All 2 branches missed.">        for (PaymentOption option : PaymentOption.values()) {</span>
+<span class="nc bnc" id="L75" title="All 2 branches missed.">            if (option.getOptionNumber() == optionNumber) {</span>
+<span class="nc" id="L76">                return option;</span>
+            }
+        }
+<span class="nc" id="L79">        return null;</span>
+    }
+}
+
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

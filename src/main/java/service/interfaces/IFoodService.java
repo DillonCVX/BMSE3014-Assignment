@@ -54,6 +54,14 @@ public interface IFoodService {
     Optional<Food> getFoodById(int foodId);
     
     /**
+     * Get food by name (case-insensitive)
+     * 
+     * @param foodName Food name
+     * @return Optional containing food if found
+     */
+    Optional<Food> getFoodByName(String foodName);
+    
+    /**
      * Validate food name
      * 
      * @param foodName Food name to validate

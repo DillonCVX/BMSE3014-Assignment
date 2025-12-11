@@ -105,6 +105,17 @@ public class FoodController {
     }
     
     /**
+     * Get food by name (case-insensitive)
+     * 
+     * @param foodName Food name
+     * @return Food if found, null otherwise
+     */
+    public Food getFoodByName(String foodName) {
+        Optional<Food> foodOpt = foodService.getFoodByName(foodName);
+        return foodOpt.orElse(null);
+    }
+    
+    /**
      * Validate food name
      * 
      * @param foodName Food name to validate

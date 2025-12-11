@@ -3,7 +3,7 @@ package presentation.Food;
 import controller.FoodController;
 import model.Food;
 import presentation.General.UserInputHandler;
-
+import presentation.General.UserCancelledException;
 import java.util.List;
 
 /**
@@ -30,25 +30,129 @@ public class FoodHandler {
      * Handle food registration
      */
     public void handleRegisterFood() {
-        
-        System.out.println("\n=== Register New Food ===");
+        try {
+            System.out.println("\n=== Register New Food ===");
 
-        String foodName = readValidFoodName("Enter your food name: ");
-        double foodPrice = readValidFoodPrice("Enter your food price : RM ");
-        String foodType = readValidFoodType("Enter your food type (S=Set / A=A la carte) : ");
-        
-        if (inputHandler.readYesNo("Are you want to proceed to add (Y/N) : ")) {
-            Food food = new Food(foodName, foodPrice, foodType);
-            Food registeredFood = foodController.registerFood(food);
-            if (registeredFood != null) {
-                printFoodDetails(registeredFood);
+            String foodName = readValidFoodName("Enter your food name: ");
+            double foodPrice = readValidFoodPrice("Enter your food price : RM ");
+            String foodType = readValidFoodType("Enter your food type (S=Set / A=A la carte) : ");
+            
+            if (inputHandler.readYesNo("Are you want to proceed to add (Y/N) : ")) {
+                Food food = new Food(foodName, foodPrice, foodType);
+                Food registeredFood = foodController.registerFood(food);
+                if (registeredFood != null) {
+                    printFoodDetails(registeredFood);
+                }
+            } else {
+                System.out.println("You have cancel registered !");
             }
-        } else {
-            System.out.println("You have cancel registered !");
+        } catch (UserCancelledException e) {
+            System.out.println("\nOperation cancelled by user.\n");
         }
     }
-
+    
     /**
+     * Handle food editing
+     */
+    public void handleEditFood() {
+        try {
+            Food food = null;
+            System.out.println("\n[]========= Edit Food =========[]");     
+            do {
+                food = searchFoodByIdOrName("Enter the food id or name to edit (or X to cancel): ");
+                
+                if (food == null) {
+                    System.out.println("\nUnable to find food in the database. Please try again.\n");
+                }
+            } while (food == null);
+            
+            printFoodDetails(food);
+        
+        boolean continueEdit = true;
+        do {
+            printEditMenu();
+            int editChoice = inputHandler.readInt("Select your choice (or X to exit): ");
+            FoodEditOption option = FoodEditOption.fromCode(editChoice);
+
+            if (option == null) {
+                System.out.println("Other than 1, 2 and 3 is invalid !!!! \n");
+            } else {
+                switch (option) {
+                    case NAME:
+                        food.setFoodName(readValidFoodName("Enter food name : "));
+                        break;
+                    case PRICE:
+                        food.setFoodPrice(readValidFoodPrice("Enter food price : "));
+                        break;
+                    case TYPE:
+                        food.setFoodType(readValidFoodType("Enter food type (S=Set / A=A la carte): "));
+                        break;
+                }
+                
+                // Update DB immediately after edit
+                Food updatedFood = foodController.updateFood(food);
+                if (updatedFood != null) {
+                    System.out.println("\nFood updated successfully!\n");
+                    System.out.println("Updated Food Details:");
+                    printFoodDetails(updatedFood);
+                    food = updatedFood; // Update local reference
+                }
+            }
+
+            String continueChoice = inputHandler.readString("Want to edit anything else? (Press Enter to continue or X to exit): ");
+            if (continueChoice.equalsIgnoreCase("X")) {
+                continueEdit = false;
+            }
+
+            System.out.println();
+
+        } while (continueEdit);
+        } catch (UserCancelledException e) {
+            System.out.println("\nOperation cancelled by user.\n");
+        }
+    }
+    
+    /**
+     * Handle food deletion
+     */
+    public void handleDeleteFood() {
+        try {
+            System.out.println("\n[]========= Delete Food =========[]");
+            
+            Food food = null;
+            
+            do {
+                food = searchFoodByIdOrName("Enter the food id or name to delete (or X to cancel): ");
+                
+                if (food == null) {
+                    System.out.println("\nUnable to find food in the database. Please try again.\n");
+                }
+            } while (food == null);
+            
+            printFoodDetails(food);
+            
+            if (inputHandler.readYesNo("Are you sure want to delete id : " + food.getFoodId() + " (Y/N) : ")) {
+                if (foodController.deleteFood(food.getFoodId())) {
+                    System.out.println("Food deleted successfully");
+                }
+            } else {
+                System.out.println("==== You have cancel to delete id :" + food.getFoodId() + " !!!!! ===\n");
+            }
+        } catch (UserCancelledException e) {
+            System.out.println("\nOperation cancelled by user.\n");
+        }
+    }
+    
+    /**
+     * Handle display all foods
+     */
+    public void handleDisplayAllFoods() {
+        List<Food> foods = foodController.getAllFoods();
+        MenuDisplay.displayAllFoods(foods);
+        waitForExit();
+    }
+
+     /**
      * Read and validate food name from user input
      * Validates format (letters only) and checks for duplicates
      * 
@@ -126,85 +230,6 @@ public class FoodHandler {
         }
         return input;
     }
-    
-    /**
-     * Handle food editing
-     */
-    public void handleEditFood() {
-        if (!inputHandler.readYesNo("Are you sure want to edit Y(YES) / N (No): ")) {
-            System.out.println("Quit From Edit !!!\n");
-            return;
-        }
-        
-        int editFoodId = inputHandler.readInt("Enter the food id that want to edit : ");
-        Food food = foodController.getFoodById(editFoodId);
-        
-        if (food == null) {
-            System.out.println("Unable to find id in the database\n");
-            return;
-        }
-        
-        printFoodDetails(food);
-        
-        char continueEdit = 'Y';
-        do {
-            printEditMenu();
-            int editChoice = inputHandler.readInt("Select your choice : ");
-            FoodEditOption option = FoodEditOption.fromCode(editChoice);
-
-            if (option == null) {
-                System.out.println("Other than 1, 2 and 3 is invalid !!!! \n");
-            } else {
-                switch (option) {
-                    case NAME:
-                        food.setFoodName(readValidFoodName("Enter food name : "));
-                        break;
-                    case PRICE:
-                        food.setFoodPrice(readValidFoodPrice("Enter food price : "));
-                        break;
-                    case TYPE:
-                        food.setFoodType(readValidFoodType("Enter food type (S=Set / A=A la carte): "));
-                        break;
-                }
-            }
-
-            continueEdit = inputHandler.readChar("Do you want to continue edit id: " + food.getFoodId() + "( Y / N ) : ");
-        } while (continueEdit == 'Y' || continueEdit == 'y');
-        
-        Food updatedFood = foodController.updateFood(food);
-        if (updatedFood != null) {
-            System.out.println("File updated successfully");
-        }
-    }
-    
-    /**
-     * Handle food deletion
-     */
-    public void handleDeleteFood() {
-        if (!inputHandler.readYesNo("Do you want to delete a food (Y / N ) : ")) {
-            System.out.println("Quit From Delete Function !!!n");
-            return;
-        }
-        
-        int deleteFoodId = inputHandler.readInt("Enter the food id want to delete : ");
-        
-        if (inputHandler.readYesNo("Are you sure want to delete id : " + deleteFoodId + " (Y/N) :")) {
-            if (foodController.deleteFood(deleteFoodId)) {
-                System.out.println("Food deleted successfully");
-            }
-        } else {
-            System.out.println("==== You have cancel to delete id :" + deleteFoodId + " !!!!! ===\n");
-        }
-    }
-    
-    /**
-     * Handle display all foods
-     */
-    public void handleDisplayAllFoods() {
-        List<Food> foods = foodController.getAllFoods();
-        MenuDisplay.displayAllFoods(foods);
-        waitForExit();
-    }
 
     /**
      * Wait for user to press X to exit
@@ -220,13 +245,13 @@ public class FoodHandler {
      * Display the food edit menu options
      */
     private void printEditMenu() {
-        System.out.println("=====================");
-        System.out.println("[]       EDIT      []");
-        System.out.println("=====================");
+        System.out.println("[]======================[]");
+        System.out.println("[]         EDIT         []");
+        System.out.println("[]======================[]");
         for (FoodEditOption option : FoodEditOption.values()) {
             System.out.printf("      %d.%s%n", option.getCode(), option.getLabel());
         }
-        System.out.println("=====================");
+        System.out.println("[]======================[]");
     }
 
     /**
@@ -235,14 +260,40 @@ public class FoodHandler {
      * @param food The food object to display
      */
     private void printFoodDetails(Food food) {
-        System.out.println("\n======================\n");
-        System.out.println("[] Food Details []\n");
-        System.out.println("======================\n");
-        System.out.println("Id :" + food.getFoodId() + "\n");
-        System.out.println("Name : " + food.getFoodName() + "\n");
-        System.out.println("Food Price : " + food.getFoodPrice() + "\n");
-        System.out.println("Food type : " + food.getFoodType() + "\n");
-        System.out.println("======================\n");
+        System.out.println();
+        System.out.println("[]========================================[]");
+        System.out.println("[]              Food Details              []");
+        System.out.println("[]========================================[]");
+        System.out.println("    Id         : " + food.getFoodId() + "");
+        System.out.println("    Name       : " + food.getFoodName() + "");
+        System.out.println("    Food Price : " + food.getFoodPrice() + "");
+        System.out.println("    Food type  : " + food.getFoodType() + "");
+        System.out.println("[]========================================[]\n");
+    }
+
+    /**
+     * Search food by ID or name
+     * Tries to parse input as integer (ID), otherwise searches by name
+     * 
+     * @param prompt The prompt message to display
+     * @return Food if found, null otherwise
+     * @throws UserCancelledException if user enters X to cancel
+     */
+    private Food searchFoodByIdOrName(String prompt) throws UserCancelledException {
+        String input = inputHandler.readString(prompt);
+        
+        if (input.equalsIgnoreCase("X")) {
+            throw new UserCancelledException();
+        }
+        
+        // Try to parse as integer (ID)
+        try {
+            int foodId = Integer.parseInt(input.trim());
+            return foodController.getFoodById(foodId);
+        } catch (NumberFormatException e) {
+            // Not a number, search by name
+            return foodController.getFoodByName(input.trim());
+        }
     }
 }
 

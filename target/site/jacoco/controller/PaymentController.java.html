@@ -4,6 +4,8 @@ import java.util.Optional;
 
 import model.Payment;
 import model.PaymentMethod;
+import repository.impl.PaymentMethodRepository;
+import service.impl.PaymentService;
 import service.interfaces.IPaymentService;
 
 /**
@@ -15,9 +17,14 @@ public class PaymentController {
     
     private final IPaymentService paymentService;
     
-<span class="fc" id="L18">    public PaymentController(IPaymentService paymentService) {</span>
-<span class="fc" id="L19">        this.paymentService = paymentService;</span>
-<span class="fc" id="L20">    }</span>
+<span class="fc" id="L20">    public PaymentController(IPaymentService paymentService) {</span>
+<span class="fc" id="L21">        this.paymentService = paymentService;</span>
+<span class="fc" id="L22">    }</span>
+    
+    // Default constructor wiring service and repository
+    public PaymentController() {
+<span class="nc" id="L26">        this(new PaymentService(new PaymentMethodRepository()));</span>
+<span class="nc" id="L27">    }</span>
     
     /**
      * Process payment
@@ -32,10 +39,10 @@ public class PaymentController {
     public Payment processPayment(int customerId, String paymentType, double amount, 
                                  String cardNumber, String expiryDate) {
         try {
-<span class="fc" id="L35">            return paymentService.processPayment(customerId, paymentType, amount, cardNumber, expiryDate);</span>
-<span class="fc" id="L36">        } catch (IllegalArgumentException e) {</span>
-<span class="fc" id="L37">            System.out.println(&quot;Payment failed: &quot; + e.getMessage());</span>
-<span class="fc" id="L38">            return null;</span>
+<span class="fc" id="L42">            return paymentService.processPayment(customerId, paymentType, amount, cardNumber, expiryDate);</span>
+<span class="fc" id="L43">        } catch (IllegalArgumentException e) {</span>
+<span class="fc" id="L44">            System.out.println(&quot;Payment failed: &quot; + e.getMessage());</span>
+<span class="fc" id="L45">            return null;</span>
         }
     }
     
@@ -47,8 +54,8 @@ public class PaymentController {
      * @return Payment method if found, null otherwise
      */
     public PaymentMethod getPaymentMethod(int customerId, String paymentType) {
-<span class="fc" id="L50">        Optional&lt;PaymentMethod&gt; paymentMethodOpt = paymentService.getPaymentMethod(customerId, paymentType);</span>
-<span class="fc" id="L51">        return paymentMethodOpt.orElse(null);</span>
+<span class="fc" id="L57">        Optional&lt;PaymentMethod&gt; paymentMethodOpt = paymentService.getPaymentMethod(customerId, paymentType);</span>
+<span class="fc" id="L58">        return paymentMethodOpt.orElse(null);</span>
     }
 }
 </pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.11.202310140853</span></div></body></html>

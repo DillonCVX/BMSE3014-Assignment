@@ -81,8 +81,10 @@ public class AdminHandler {
                 case VIEW_ALL_FOOD:
                     foodHandler.handleDisplayAllFoods();
                     break;
-                default:
+                case EXIT:
                     backFoodMenu = true;
+                    System.out.println("Returning to Admin Menu...\n");
+                    break;
             }
         } while (!backFoodMenu);
     }

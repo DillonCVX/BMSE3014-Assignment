@@ -38,10 +38,16 @@ public class MenuDisplay {
         System.out.println("[]        Food Management        []");
         System.out.println("[]===============================[]");
         for (FoodManagementOption option : FoodManagementOption.values()) {
-            String optionText = option.getCode() + "." + option.getLabel();
-            String formattedLine = String.format("        %-25s", optionText);
-            System.out.println(formattedLine);
+            if (option.getCode() != 0) {
+                String optionText = option.getCode() + "." + option.getLabel();
+                String formattedLine = String.format("        %-25s", optionText);
+                System.out.println(formattedLine);
+            }
         }
+        System.out.println("[]===============================[]");
+        String exitOption = "0.Back to Admin Menu";
+        String exitLine = String.format("        %-25s", exitOption);
+        System.out.println(exitLine);
         System.out.println("[]===============================[]\n");
     }
     

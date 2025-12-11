@@ -453,7 +453,10 @@ public class ApplicationTest {
     @Test
     @DisplayName("Test handleAdminMenu - all menu options")
     void testHandleAdminMenu_AllOptions() {
-        String input = "1\nN\n2\nN\n3\nN\n4\n5\n0\n";
+        // Option 1: Food Management -> 0 to exit back
+        // Option 2: Order Report
+        // Option 0: Back to Main Menu
+        String input = "1\n0\n2\n0\n";
         System.setIn(new ByteArrayInputStream(input.getBytes()));
         Application app = new Application();
         app.handleAdminMenu();

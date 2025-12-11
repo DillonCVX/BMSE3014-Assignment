@@ -18,6 +18,7 @@ import repository.interfaces.IFoodRepository;
 public class FoodRepository implements IFoodRepository {
     
     private static final String FIND_BY_ID = "SELECT * FROM foods WHERE food_id = ?";
+    private static final String FIND_BY_NAME = "SELECT * FROM foods WHERE LOWER(food_name) = LOWER(?)";
     private static final String FIND_ALL = "SELECT * FROM foods ORDER BY food_id";
     private static final String INSERT = "INSERT INTO foods (food_name, food_price, food_type) VALUES (?, ?, ?)";
     private static final String UPDATE = "UPDATE foods SET food_name = ?, food_price = ?, food_type = ? WHERE food_id = ?";
@@ -64,6 +65,29 @@ public class FoodRepository implements IFoodRepository {
             }
         } catch (SQLException e) {
             System.err.println("Error finding food by ID: " + e.getMessage());
+        }
+        return Optional.empty();
+    }
+    
+    /**
+     * Find food by name (case-insensitive)
+     * 
+     * @param foodName Food name to search for
+     * @return Optional containing food if found, empty otherwise
+     */
+    @Override
+    public Optional<Food> findByName(String foodName) {
+        try (Connection conn = connectionProvider.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(FIND_BY_NAME)) {
+            
+            stmt.setString(1, foodName);
+            ResultSet rs = stmt.executeQuery();
+            
+            if (rs.next()) {
+                return Optional.of(mapResultSetToFood(rs));
+            }
+        } catch (SQLException e) {
+            System.err.println("Error finding food by name: " + e.getMessage());
         }
         return Optional.empty();
     }

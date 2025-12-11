@@ -46,7 +46,7 @@ public class MenuDisplayTest {
         String output = out.toString();
         
         assertTrue(output.contains("Admin"));
-        assertTrue(output.contains("Register New Food"));
+        assertTrue(output.contains("Food Management"));
         
         System.setOut(System.out);
     }

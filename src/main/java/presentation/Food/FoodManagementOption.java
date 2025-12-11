@@ -7,7 +7,8 @@ public enum FoodManagementOption {
     REGISTER_FOOD(1, "Register New Food"),
     EDIT_FOOD(2, "Edit Food"),
     DELETE_FOOD(3, "Delete Food"),
-    VIEW_ALL_FOOD(4, "View All Food");
+    VIEW_ALL_FOOD(4, "View All Food"),
+    EXIT(0, "Back to Admin Menu");
 
     private final int code;
     private final String label;
