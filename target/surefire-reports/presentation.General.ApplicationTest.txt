@@ -1,4 +1,60 @@
 -------------------------------------------------------------------------------
 Test set: presentation.General.ApplicationTest
 -------------------------------------------------------------------------------
-Tests run: 40, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.710 s -- in presentation.General.ApplicationTest
+Tests run: 40, Failures: 0, Errors: 5, Skipped: 0, Time elapsed: 0.478 s <<< FAILURE! -- in presentation.General.ApplicationTest
+presentation.General.ApplicationTest.testHandleRegister_CompleteFlow -- Time elapsed: 0.033 s <<< ERROR!
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1656)
+	at presentation.General.UserInputHandler.readString(UserInputHandler.java:74)
+	at presentation.Customer.CustomerHandler.handleRegister(CustomerHandler.java:101)
+	at presentation.General.Application.handleRegister(Application.java:139)
+	at presentation.General.ApplicationTest.testHandleRegister_CompleteFlow(ApplicationTest.java:236)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.General.ApplicationTest.testHandleRegister_WithValidationRetries -- Time elapsed: 0.016 s <<< ERROR!
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1656)
+	at presentation.General.UserInputHandler.readString(UserInputHandler.java:74)
+	at presentation.Customer.CustomerHandler.handleRegister(CustomerHandler.java:101)
+	at presentation.General.Application.handleRegister(Application.java:139)
+	at presentation.General.ApplicationTest.testHandleRegister_WithValidationRetries(ApplicationTest.java:248)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.General.ApplicationTest.testHandleRegister_CancelAtFinal -- Time elapsed: 0.015 s <<< ERROR!
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1656)
+	at presentation.General.UserInputHandler.readString(UserInputHandler.java:74)
+	at presentation.Customer.CustomerHandler.handleRegister(CustomerHandler.java:101)
+	at presentation.General.Application.handleRegister(Application.java:139)
+	at presentation.General.ApplicationTest.testHandleRegister_CancelAtFinal(ApplicationTest.java:474)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.General.ApplicationTest.testHandleAdminMenu_Exit -- Time elapsed: 0 s <<< ERROR!
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1656)
+	at presentation.General.UserInputHandler.readString(UserInputHandler.java:74)
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:85)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.General.Application.handleAdminMenu(Application.java:146)
+	at presentation.General.ApplicationTest.testHandleAdminMenu_Exit(ApplicationTest.java:112)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.General.ApplicationTest.testHandleRegister_AllValidationFailures -- Time elapsed: 0.011 s <<< ERROR!
+java.util.NoSuchElementException: No line found
+	at java.base/java.util.Scanner.nextLine(Scanner.java:1656)
+	at presentation.General.UserInputHandler.readString(UserInputHandler.java:74)
+	at presentation.Customer.CustomerHandler.handleRegister(CustomerHandler.java:101)
+	at presentation.General.Application.handleRegister(Application.java:139)
+	at presentation.General.ApplicationTest.testHandleRegister_AllValidationFailures(ApplicationTest.java:547)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+

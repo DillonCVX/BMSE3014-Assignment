@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------
+Test set: presentation.Admin.AdminHandlerTest
+-------------------------------------------------------------------------------
+Tests run: 6, Failures: 0, Errors: 6, Skipped: 0, Time elapsed: 0.194 s <<< FAILURE! -- in presentation.Admin.AdminHandlerTest
+presentation.Admin.AdminHandlerTest.testHandleAdminMenu_LoginFail -- Time elapsed: 0.160 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleAdminMenu_LoginFail(AdminHandlerTest.java:61)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.Admin.AdminHandlerTest.testHandleAdminMenu_InvalidInput -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleAdminMenu_InvalidInput(AdminHandlerTest.java:188)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.Admin.AdminHandlerTest.testHandleFoodManagement_FullFlow -- Time elapsed: 0.004 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleFoodManagement_FullFlow(AdminHandlerTest.java:118)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.Admin.AdminHandlerTest.testHandleOrderReport -- Time elapsed: 0.006 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleOrderReport(AdminHandlerTest.java:167)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.Admin.AdminHandlerTest.testHandleAdminMenu_LoginSuccess_ThenExit -- Time elapsed: 0.003 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleAdminMenu_LoginSuccess_ThenExit(AdminHandlerTest.java:82)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
+presentation.Admin.AdminHandlerTest.testHandleFoodManagement_InvalidInput -- Time elapsed: 0 s <<< ERROR!
+java.lang.NullPointerException: Cannot invoke "controller.AdminController.login(String, String)" because "this.adminController" is null
+	at presentation.Admin.AdminHandler.performLogin(AdminHandler.java:88)
+	at presentation.Admin.AdminHandler.handleAdminMenu(AdminHandler.java:36)
+	at presentation.Admin.AdminHandlerTest.testHandleFoodManagement_InvalidInput(AdminHandlerTest.java:142)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:578)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1511)
+
