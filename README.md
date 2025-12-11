@@ -9,7 +9,6 @@ A console-based food ordering application built with Java, implementing N-layere
 - **Order Processing**: Browse menu, place orders, and process payments
 - **Payment Methods**: Multiple payment options (TNG, Cash, Online Banking)
 - **Admin Panel**: Food management and order reports
-- **User Cancellation**: 'X' to exit functionality across all inputs
 
 ## 🛠️ Tech Stack
 
@@ -48,21 +47,6 @@ src/
 - Dependency injection for testability
 - Repository pattern for data access
 
-## 🧪 Testing & Coverage
-
-```
-Total Tests: 485
-✅ Failures: 0
-✅ Errors: 0
-✅ Coverage: >85% (exceeds requirements)
-```
-
-### Module Coverage:
-- **Food Module**: 99% (69 tests)
-- **Repository Layer**: >85%
-- **Service Layer**: >90%
-- **Controller Layer**: >85%
-- **Presentation Layer**: >85%
 
 ## 🚦 Running the Application
 
@@ -95,24 +79,14 @@ mvn test -Dtest=FoodHandlerTest
 mvn jacoco:report
 ```
 
-View coverage report: `target/site/jacoco/index.html`
-
-## 👤 Default Users
-
-**Admin:**
-- Username: `admin`
-- Password: `admin123`
-
-**Customer (Test):**
-- Register new account or use existing credentials
 
 ## 📋 Key Design Patterns
 
-- **Repository Pattern** - Data access abstraction
-- **Singleton Pattern** - Database connection
-- **Factory Pattern** - Object creation
-- **MVC Pattern** - Separation of concerns
-- **Dependency Injection** - Loose coupling
+- **N-Layered Architecture** - Presentation → Controller → Service → Repository
+- **Repository Pattern** - Data access abstraction with interfaces
+- **Dependency Injection** - Constructor injection for testability
+- **Enum Pattern** - Type-safe menu options (AdminMenuOption, FoodEditOption, etc.)
+- **Exception Handling Pattern** - Custom UserCancelledException
 
 ## 🎯 Code Quality
 
@@ -122,25 +96,3 @@ View coverage report: `target/site/jacoco/index.html`
 - **Enum-based Menus** - Type-safe menu options
 - **Exception Handling** - UserCancelledException for graceful exits
 - **Input Validation** - Comprehensive validation with retry logic
-
-## 📝 Assignment Requirements
-
-✅ N-layered architecture  
-✅ Test coverage >85%  
-✅ Clean code principles  
-✅ Repository pattern  
-✅ Comprehensive documentation  
-✅ Error handling  
-✅ Input validation  
-
-## 🤝 Contributors
-
-BMSE3014 Assignment - Food Ordering System
-
-## 📄 License
-
-Academic Project - BMSE3014
-
----
-
-**Note:** This is a console-based application developed for educational purposes.
