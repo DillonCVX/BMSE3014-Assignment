@@ -122,4 +122,20 @@ public class Order {
                 ", status='" + status + '\'' +
                 '}';
     }
+    /**
+     * Builder for Order to support fluent construction.
+     */
+    public static class Builder {
+        private final Order o;
+        public Builder() { o = new Order(); }
+        public Builder orderId(int id) { o.setOrderId(id); return this; }
+        public Builder orderDate(Date d) { o.setOrderDate(d); return this; }
+        public Builder customer(Customer c) { o.setCustomer(c); return this; }
+        public Builder orderDetails(List<OrderDetails> details) { o.setOrderDetails(details); return this; }
+        public Builder totalPrice(BigDecimal total) { o.totalPrice = total; return this; }
+        public Builder totalPrice(double total) { o.setTotalPrice(total); return this; }
+        public Builder paymentMethod(PaymentMethod pm) { o.setPaymentMethod(pm); return this; }
+        public Builder status(String s) { o.setStatus(s); return this; }
+        public Order build() { return o; }
+    }
 }
