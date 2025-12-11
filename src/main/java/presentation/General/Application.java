@@ -19,17 +19,14 @@ import presentation.Food.FoodHandler;
 import presentation.Food.MenuDisplay;
 import presentation.Order.OrderHandler;
 
-<<<<<<< Updated upstream
 import repository.impl.FoodRepository;
 import service.impl.FoodService;
 import service.interfaces.IFoodService;
-=======
 // --- IMPORTS FOR ADMIN DB CONNECTION ---
 import repository.impl.AdminRepository;
 import repository.interfaces.IAdminRepository;
 
 // ---------------------------------------
->>>>>>> Stashed changes
 
 /**
  * Main Application Class
@@ -58,30 +55,24 @@ public class Application {
     public Application() {
         this.scanner = new Scanner(System.in);
         this.inputHandler = new UserInputHandler(scanner);
-<<<<<<< Updated upstream
         
         // Wire dependencies following N-layered architecture
         // Repository → Service → Controller
         IFoodService foodService = new FoodService(new FoodRepository());
         this.foodController = new FoodController(foodService);
         
-=======
 
         // 1. Initialize Controllers
         // (Assuming these manage their own services internally as per your request)
->>>>>>> Stashed changes
         this.customerController = new CustomerController();
         this.orderController = new OrderController();
-<<<<<<< Updated upstream
         
-=======
         this.adminController = new AdminController();
 
         // 2. Initialize Admin Service Stack (REQUIRED for DB Login)
         IAdminRepository adminRepository = new AdminRepository();
 
         // 3. Initialize Handlers
->>>>>>> Stashed changes
         this.foodHandler = new FoodHandler(foodController, inputHandler);
         this.customerHandler = new CustomerHandler(customerController, inputHandler);
         this.orderHandler = new OrderHandler(foodController, orderController, inputHandler);
