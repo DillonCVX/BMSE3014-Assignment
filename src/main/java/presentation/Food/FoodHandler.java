@@ -165,8 +165,6 @@ public class FoodHandler {
                     case TYPE:
                         food.setFoodType(readValidFoodType("Enter food type (S=Set / A=A la carte): "));
                         break;
-                    default:
-                        System.out.println("Other than 1, 2 and 3 is invalid !!!! \n");
                 }
             }
 

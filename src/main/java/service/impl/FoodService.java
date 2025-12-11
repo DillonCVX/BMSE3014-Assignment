@@ -25,16 +25,7 @@ public class FoodService implements IFoodService {
     
     @Override
     public Food registerFood(Food food) throws IllegalArgumentException {
-        // Validate all fields
-        if (!validateFoodName(food.getFoodName())) {
-            throw new IllegalArgumentException("Food name must contain only letters");
-        }
-        if (!validateFoodPrice(food.getFoodPrice())) {
-            throw new IllegalArgumentException("Food price must be at least RM " + MIN_PRICE);
-        }
-        if (!validateFoodType(food.getFoodType())) {
-            throw new IllegalArgumentException("Food type must be 'Set' or 'A la carte'");
-        }
+        validateAllFields(food);
         
         // Generate food ID
         food.setFoodId(generateUniqueFoodId());
@@ -50,7 +41,19 @@ public class FoodService implements IFoodService {
             throw new IllegalArgumentException("Food with ID " + food.getFoodId() + " not found");
         }
         
-        // Validate all fields
+        validateAllFields(food);
+        
+        // Update food
+        return foodRepository.update(food);
+    }
+
+    /**
+     * Validate all food fields
+     * 
+     * @param food Food to validate
+     * @throws IllegalArgumentException if any field is invalid
+     */
+    private void validateAllFields(Food food) throws IllegalArgumentException {
         if (!validateFoodName(food.getFoodName())) {
             throw new IllegalArgumentException("Food name must contain only letters");
         }
@@ -60,9 +63,6 @@ public class FoodService implements IFoodService {
         if (!validateFoodType(food.getFoodType())) {
             throw new IllegalArgumentException("Food type must be 'Set' or 'A la carte'");
         }
-        
-        // Update food
-        return foodRepository.update(food);
     }
 
     private int generateUniqueFoodId() {

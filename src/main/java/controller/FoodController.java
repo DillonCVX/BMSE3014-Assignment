@@ -33,12 +33,7 @@ public class FoodController {
      * @return Registered food if successful, null if validation fails
      */
     public Food registerFood(Food food) {
-        try {
-            return foodService.registerFood(food);
-        } catch (IllegalArgumentException e) {
-            System.out.println("Registration failed: " + e.getMessage());
-            return null;
-        }
+        return executeFoodOperation(() -> foodService.registerFood(food), "Registration");
     }
     
     /**
@@ -48,12 +43,31 @@ public class FoodController {
      * @return Updated food if successful, null if validation fails
      */
     public Food updateFood(Food food) {
+        return executeFoodOperation(() -> foodService.updateFood(food), "Update");
+    }
+
+    /**
+     * Execute food operation with error handling
+     * 
+     * @param operation Food operation to execute
+     * @param operationName Name of the operation for error messages
+     * @return Result of operation or null if failed
+     */
+    private Food executeFoodOperation(FoodOperation operation, String operationName) {
         try {
-            return foodService.updateFood(food);
+            return operation.execute();
         } catch (IllegalArgumentException e) {
-            System.out.println("Update failed: " + e.getMessage());
+            System.out.println(operationName + " failed: " + e.getMessage());
             return null;
         }
+    }
+
+    /**
+     * Functional interface for food operations
+     */
+    @FunctionalInterface
+    private interface FoodOperation {
+        Food execute() throws IllegalArgumentException;
     }
     
     /**
